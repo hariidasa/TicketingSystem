@@ -12,9 +12,11 @@ class NavBar extends Component {
         }
         return (
             <>
-                <Navbar bg="light" expand="sm">
+                <Navbar bg="dark" expand="sm">
                     <Navbar.Brand href="/">
-                        Railway E-Ticketing
+                       <h4 className="text-white text-sm-center">
+                           E-Ticketing
+                       </h4>
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                     <Navbar.Collapse id="basic-navbar-nav">
@@ -28,7 +30,7 @@ class NavBar extends Component {
                                         <NavDropdown.Item onClick={this.props.logout}>Sign out</NavDropdown.Item>
                                     </NavDropdown>
                                     {(user.imageUrl) ? <Image src={user.imageUrl} width={40}/> :
-                                        <Image src={require("../../images/login.png")} width={40}/>}
+                                        <Image src={require("../images/login.png")} width={40}/>}
                                 </>
                                 :
                                 <>
@@ -43,14 +45,14 @@ class NavBar extends Component {
 
                 <Row style={{alignItems: 'center', justifyContent: 'center', width: '100%', margin: 0}}>
                     <div style={{width: '100%'}}>
-                        <Image style={{width: '100%'}} src={require("../../images/railway2.jpg")}/>
+                        <Image style={{width: '100%'}} src={require("../images/busImage1.png")}/>
                     </div>
                 </Row>
 
-                <Navbar style={{justifyContent: 'space-between'}} bg="dark" variant="dark" expand="sm">
+                <Navbar style={{justifyContent: 'space-between'}} bg="danger" variant="dark" expand="sm">
                     <Navbar.Brand href="/"></Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav"/>
-                    <Navbar.Collapse id="basic-navbar-nav" data-collapsed="false">
+                    <Navbar.Collapse id="basic-navbar-nav" data-collapsed="false" >
                         <Nav className="mx-auto">
                             <Nav.Link href="/">{'Home'}</Nav.Link>
                             <Nav.Link href="/contact">{'Contact Us'}</Nav.Link>

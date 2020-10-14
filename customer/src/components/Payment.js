@@ -4,7 +4,7 @@ import { Table, Row, Form, Col, Button, Alert } from 'react-bootstrap'
 import { validateCard, validatePhone, makeReservation } from '../Services'
 import { toast } from 'react-toastify'
 
-class PaymentPage extends Component {
+class Payment extends Component {
 
     constructor(props) {
         super(props);
@@ -117,18 +117,18 @@ class PaymentPage extends Component {
                     <Form.Row style={{ width: '75%' }}>
                         <Table striped bordered hover size="sm">
                             <tbody>
-                            <tr>
-                                <td align='right'>Amount</td>
-                                <td align='right'>{this.state.amount} LKR</td>
-                            </tr>
-                            <tr>
-                                <td align='right'>Discount</td>
-                                <td align='right'>{this.state.discount} LKR</td>
-                            </tr>
-                            <tr>
-                                <td align='right'>Total</td>
-                                <td align='right'>{this.state.total} LKR</td>
-                            </tr>
+                                <tr>
+                                    <td align='right'>Amount</td>
+                                    <td align='right'>{this.state.amount} LKR</td>
+                                </tr>
+                                <tr>
+                                    <td align='right'>Discount</td>
+                                    <td align='right'>{this.state.discount} LKR</td>
+                                </tr>
+                                <tr>
+                                    <td align='right'>Total</td>
+                                    <td align='right'>{this.state.total} LKR</td>
+                                </tr>
                             </tbody>
                         </Table>
                     </Form.Row>
@@ -156,24 +156,24 @@ class PaymentPage extends Component {
                             />
                         </Col>
                     </Form.Row>
-                    {this.state.checked === 'card' &&
-                    <Form.Row style={{ width: '75%' }}>
-                        <Form.Group as={Col} controlId="cardNo">
-                            <Form.Label>Card Number</Form.Label>
-                            <Form.Control required placeholder="card number" onChange={this.handleChange('cardNo')} value={this.state.cardNo} />
-                        </Form.Group>
-                        <Form.Group as={Col} controlId="cvc">
-                            <Form.Label>CVC Number</Form.Label>
-                            <Form.Control required placeholder="CVC" onChange={this.handleChange('cvc')} value={this.state.cvc} />
-                        </Form.Group>
-                        <Form.Group as={Col} controlId="exp">
-                            <Form.Label>Exp Date</Form.Label>
-                            <Form.Control required placeholder="dd/mm" onChange={this.handleChange('exp')} value={this.state.exp} />
-                        </Form.Group>
-                    </Form.Row>
+                    {this.state.checked === 'card' && 
+                        <Form.Row style={{ width: '75%' }}>
+                            <Form.Group as={Col} controlId="cardNo">
+                                <Form.Label>Card Number</Form.Label>
+                                <Form.Control required placeholder="card number" onChange={this.handleChange('cardNo')} value={this.state.cardNo} />
+                            </Form.Group>
+                            <Form.Group as={Col} controlId="cvc">
+                                <Form.Label>CVC Number</Form.Label>
+                                <Form.Control required placeholder="CVC" onChange={this.handleChange('cvc')} value={this.state.cvc} />
+                            </Form.Group>
+                            <Form.Group as={Col} controlId="exp">
+                                <Form.Label>Exp Date</Form.Label>
+                                <Form.Control required placeholder="dd/mm" onChange={this.handleChange('exp')} value={this.state.exp} />
+                            </Form.Group>
+                        </Form.Row>
                     }
                     {this.state.checked === 'cash' &&
-                    <div />
+                        <div />
                     }
                     <Form.Row style={{ width: '75%' }}>
                         {this.state.showPaymentErr && <Alert variant={'danger'}>{this.state.errMsg}</Alert>}
@@ -190,4 +190,4 @@ class PaymentPage extends Component {
     }
 }
 
-export default PaymentPage;
+export default Payment

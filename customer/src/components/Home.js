@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-//import { routes, route, trainsByRoute, classes, schedules, getBookedSeatsCount } from '../Services'
+import { routes, route, trainsByRoute, classes, schedules, getBookedSeatsCount } from '../Services'
+
 import { Button, Form, Col, Row, Table } from 'react-bootstrap'
 import Select from 'react-select'
 import DatePicker from "react-datepicker"
 import moment from 'moment'
 
-class HomePage extends Component {
+class Home extends Component {
 
     constructor(props) {
         super(props);
@@ -190,7 +191,7 @@ class HomePage extends Component {
             <Form style={{ padding: 20 }} onSubmit={(e) => this.handleSubmit(e)}>
                 <Row style={{ alignItems: 'center', justifyContent: 'center' }}>
                     <Form.Row style={{ width: '75%', borderBottom: '1px solid rgb(200,200,200)', marginBottom: 20 }}>
-                        <h4>Book Train Tickets</h4>
+                        <h4>Book Your Bus Ticket</h4>
                     </Form.Row>
                     <Form.Row style={{ width: '75%' }}>
                         <Form.Group as={Col} controlId="from">
@@ -200,19 +201,19 @@ class HomePage extends Component {
                         <Form.Group as={Col} controlId="to">
                             <Form.Label>To</Form.Label>
                             <Select options={this.state.toOptions} onChange={this.handleChange("to")}
-                                    value={this.state.to} />
+                                value={this.state.to} />
                         </Form.Group>
                     </Form.Row>
                     <Form.Row style={{ width: '75%' }}>
                         <Form.Group as={Col} controlId="from">
-                            <Form.Label>Train</Form.Label>
+                            <Form.Label>Bus</Form.Label>
                             <Select options={this.state.trains} onChange={this.handleChange("train")}
-                                    value={this.state.train} />
+                                value={this.state.train} />
                         </Form.Group>
                         <Form.Group as={Col} controlId="to">
                             <Form.Label>Class</Form.Label>
                             <Select options={this.state.classes} onChange={this.handleChange("trainClass")}
-                                    value={this.state.trainClass} />
+                                value={this.state.trainClass} />
                         </Form.Group>
                     </Form.Row>
                     <Form.Row style={{ width: '75%' }}>
@@ -229,7 +230,7 @@ class HomePage extends Component {
                         <Form.Group as={Col} controlId="time">
                             <Form.Label>Time</Form.Label>
                             <Select options={this.state.schedules} onChange={this.handleChange("time")}
-                                    value={this.state.time} />
+                                value={this.state.time} />
                         </Form.Group>
                     </Form.Row>
                     <Form.Row style={{ width: '75%', paddingBottom: 20 }}>
@@ -240,39 +241,39 @@ class HomePage extends Component {
                     </Form.Row>
                     <Form.Row style={{ width: '75%', paddingLeft: 5, align: 'right' }}>
                         {this.state.amount &&
-                        <Table striped size="sm">
-                            <tbody>
-                            <tr>
-                                <td align='right' style={{ border: "1px solid #dee2e6" }}>Available Seats</td>
-                                <td align='right' style={{
-                                    border: "1px solid #dee2e6",
-                                    color: asColor
-                                }}>{this.state.availableSeats}</td>
-                            </tr>
-                            <tr style={{ border: "none" }}>
-                                <td style={{ border: "none" }} height="40" />
-                            </tr>
-                            <tr>
-                                <td align='right' style={{ border: "1px solid #dee2e6" }}>Amount</td>
-                                <td align='right' style={{ border: "1px solid #dee2e6" }}>{this.state.amount} LKR</td>
-                            </tr>
-                            <tr>
-                                <td align='right' style={{ border: "1px solid #dee2e6" }}>Discount</td>
-                                <td align='right' style={{ border: "1px solid #dee2e6" }}>{this.state.discount} LKR</td>
-                            </tr>
-                            <tr>
-                                <td align='right' style={{ border: "1px solid #dee2e6" }}>Total</td>
-                                <td align='right' style={{ border: "1px solid #dee2e6" }}>{this.state.total} LKR</td>
-                            </tr>
-                            </tbody>
-                        </Table>
+                            <Table striped size="sm">
+                                <tbody>
+                                    <tr>
+                                        <td align='right' style={{ border: "1px solid #dee2e6" }}>Available Seats</td>
+                                        <td align='right' style={{
+                                            border: "1px solid #dee2e6",
+                                            color: asColor
+                                        }}>{this.state.availableSeats}</td>
+                                    </tr>
+                                    <tr style={{ border: "none" }}>
+                                        <td style={{ border: "none" }} height="40" />
+                                    </tr>
+                                    <tr>
+                                        <td align='right' style={{ border: "1px solid #dee2e6" }}>Amount</td>
+                                        <td align='right' style={{ border: "1px solid #dee2e6" }}>{this.state.amount} LKR</td>
+                                    </tr>
+                                    <tr>
+                                        <td align='right' style={{ border: "1px solid #dee2e6" }}>Discount</td>
+                                        <td align='right' style={{ border: "1px solid #dee2e6" }}>{this.state.discount} LKR</td>
+                                    </tr>
+                                    <tr>
+                                        <td align='right' style={{ border: "1px solid #dee2e6" }}>Total</td>
+                                        <td align='right' style={{ border: "1px solid #dee2e6" }}>{this.state.total} LKR</td>
+                                    </tr>
+                                </tbody>
+                            </Table>
                         }
                     </Form.Row>
                     <Form.Row style={{ width: '75%' }}>
                         {this.state.showErr && <p style={{ color: 'red' }}>{this.state.errMsg}</p>}
                     </Form.Row>
                     <Form.Row style={{ width: '75%', padding: 5 }}>
-                        <Button variant="primary" type="submit" disabled={bookingDisable}>
+                        <Button variant="success" type="submit" disabled={bookingDisable} block>
                             Make Reservation
                         </Button>
                     </Form.Row>
@@ -282,4 +283,4 @@ class HomePage extends Component {
     }
 }
 
-export default HomePage;
+export default Home;

@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {Card, Col, Row} from 'react-bootstrap';
-//import {getReservation} from '../Services'
+import {getReservation} from '../Services'
 
-class TicketPage extends Component {
+class Ticket extends Component {
 
     state = {}
 
@@ -65,4 +65,4 @@ class TicketPage extends Component {
     }
 }
 
-export default TicketPage;
+export default Ticket

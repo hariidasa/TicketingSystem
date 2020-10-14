@@ -4,7 +4,7 @@ import { Col, Button, Form, Card, Row } from 'react-bootstrap'
 import { contact } from '../Services'
 import { toast } from 'react-toastify'
 
-class ContactDetails extends Component {
+class Contact extends Component {
 
     constructor(props) {
         super(props);
@@ -101,4 +101,4 @@ class ContactDetails extends Component {
     }
 }
 
-export default ContactDetails;
+export default Contact;

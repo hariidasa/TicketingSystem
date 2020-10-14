@@ -8,7 +8,7 @@ import * as PropTypes from "prop-types";
 
 var QRCode = require('qrcode.react')
 
-class ReservationPage extends Component {
+class Reservations extends Component {
 
     constructor(props) {
         super(props);
@@ -124,7 +124,7 @@ class ReservationPage extends Component {
                                             <Col>From <b>{reservation.from}</b> to <b>{reservation.to}</b></Col>
                                         </Row>
                                         <Row>
-                                            <Col>Train : {reservation.train}</Col>
+                                            <Col>Bus : {reservation.train}</Col>
                                         </Row>
                                         <Row>
                                             <Col>Class : {reservation.trainClass}</Col>
@@ -177,7 +177,7 @@ class ReservationPage extends Component {
 
 }
 
-export default ReservationPage;
+export default Reservations;
 
 function ReservationList(props) {
     return <>

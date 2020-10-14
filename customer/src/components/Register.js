@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 
 import { Modal, Button, Form, Col } from 'react-bootstrap'
-//import { register } from '../Services'
+import { register } from '../Services'
 import { toast } from 'react-toastify'
-import { getHash } from './common/Encryption'
-import {register} from "../serviceWorker";
+import { getHash } from './commons/Functions'
 
-class RegisterPage extends Component {
+class Register extends Component {
 
     constructor(props, context) {
         super(props, context)
@@ -58,7 +57,7 @@ class RegisterPage extends Component {
                     })
             }
         }
-        // this.setState({ validated: true })
+        // this.setState({ validated: true }) 
         event.preventDefault()
         event.stopPropagation()
     }
@@ -128,4 +127,4 @@ class RegisterPage extends Component {
     }
 }
 
-export default RegisterPage;
+export default Register;

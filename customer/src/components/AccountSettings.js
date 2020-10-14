@@ -6,7 +6,7 @@ import {toast} from 'react-toastify'
 import {getHash} from './commons/Functions'
 import {Link} from 'react-router-dom';
 
-class ConfigAccount extends Component {
+class AccountSettings extends Component {
 
     constructor(props, context) {
         super(props, context)
@@ -192,4 +192,4 @@ class ConfigAccount extends Component {
     }
 }
 
-export default ConfigAccount;
+export default AccountSettings
