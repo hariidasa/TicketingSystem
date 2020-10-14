@@ -20,7 +20,7 @@ class RouteManage extends React.Component {
     }
 
     componentDidMount() {
-        fetch(config.baseUrl + "/railway/routers").then(res => res.json()).then(data => {
+        fetch(config.baseUrl + "/busroute/routes").then(res => res.json()).then(data => {
             this.setState({selectRoutes: data})
         })
     }
@@ -47,7 +47,7 @@ class RouteManage extends React.Component {
             }
         }
 
-        fetch(config.baseUrl + "/railway/route", option).then(res => res.json()).then(res => {
+        fetch(config.baseUrl + "/busroute/route", option).then(res => res.json()).then(res => {
             if (res.routeExist) {
                 toast.error("Route Already Exist")
             } else {
@@ -80,7 +80,7 @@ class RouteManage extends React.Component {
                 }
             }
 
-            fetch(config.baseUrl + "/railway/route", option).then(res => res.json()).then(res => {
+            fetch(config.baseUrl + "/busroute/route", option).then(res => res.json()).then(res => {
                 if (res.stationExist) {
                     toast.error("Station Already Exist")
                 } else {
@@ -113,7 +113,7 @@ class RouteManage extends React.Component {
             }
         }
 
-        fetch(config.baseUrl + "/railway/route", option).then(res => res.json()).then(res => {
+        fetch(config.baseUrl + "/busroute/route", option).then(res => res.json()).then(res => {
             if (res.status) {
                 toast.success("Route Deleted Successfully")
                 setTimeout(() => {
