@@ -10,6 +10,7 @@ const login = require('./routers/login')
 const register = require('./routers/register')
 const user = require('./routers/user')
 const admin = require('./routers/admin')
+const railway = require('./routers/busroute')
 
 //db connection
 mongoose.connect(
@@ -31,6 +32,7 @@ app.use(function (req, res, next) {
     next();
 });
 
+app.use(railway)
 app.use(login)
 app.use(register)
 app.use(user)
