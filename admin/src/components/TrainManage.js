@@ -35,10 +35,10 @@ class TrainManage extends React.Component {
     }
 
     componentDidMount() {
-        fetch(config.baseUrl + "/railway/routers").then(res => res.json()).then(data => {
+        fetch(config.baseUrl + "/busroute/routes").then(res => res.json()).then(data => {
             this.setState({selectRoutes: data})
         })
-        fetch(config.baseUrl + "/railway/trains").then(res => res.json()).then(data => {
+        fetch(config.baseUrl + "/busroute/buses").then(res => res.json()).then(data => {
             this.setState({selectTrains: data})
         })
     }
@@ -91,7 +91,7 @@ class TrainManage extends React.Component {
                 }
             }
 
-            fetch(config.baseUrl + "/railway/train", option).then(res => res.json()).then(res => {
+            fetch(config.baseUrl + "/busroute/bus", option).then(res => res.json()).then(res => {
                 if (res.trainExist) {
                     toast.error("Train Already Exist")
                 } else {
@@ -124,7 +124,7 @@ class TrainManage extends React.Component {
             }
         }
 
-        fetch(config.baseUrl + "/railway/train", option).then(res => res.json()).then(res => {
+        fetch(config.baseUrl + "/busroute/bus", option).then(res => res.json()).then(res => {
             if (res.status) {
                 toast.success("Train Deleted Successfully")
                 setTimeout(() => {
@@ -143,8 +143,8 @@ class TrainManage extends React.Component {
             return <option key={route._id} value={route.name}>{route.name}</option>
         })
 
-        const trainSelect = this.state.selectTrains.map(train => {
-            return <option key={train._id} value={train.name}>{train.name}</option>
+        const trainSelect = this.state.selectTrains.map(bus => {
+            return <option key={bus._id} value={bus.name}>{bus.name}</option>
         })
 
         return (
