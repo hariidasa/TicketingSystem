@@ -100,8 +100,6 @@ class App extends Component {
             </Router>
           </div>
 
-          <Footer />
-
           <ToastContainer
               autoClose={3000}
               position="bottom-right"
