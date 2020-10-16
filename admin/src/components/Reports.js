@@ -38,7 +38,7 @@ class Reports extends React.Component {
             }
         }
 
-        fetch(config.baseUrl + "/busroute/reservations/yearly", option).then(res => res.json()).then(data => {
+        fetch(config.baseUrl + "/transroute/reservations/yearly", option).then(res => res.json()).then(data => {
             this.props.history.push("/reportCharts", {res: data})
         })
 
@@ -60,7 +60,7 @@ class Reports extends React.Component {
             }
         }
 
-        fetch(config.baseUrl + "/busroute/reservations/monthly", option).then(res => res.json()).then(data => {
+        fetch(config.baseUrl + "/transroute/reservations/monthly", option).then(res => res.json()).then(data => {
             this.props.history.push("/reportCharts", {res: data})
         })
 

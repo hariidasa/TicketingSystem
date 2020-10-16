@@ -12,7 +12,7 @@ class NavBar extends Component {
         return (
             <Navbar bg="dark" variant="dark" expand="sm">
                 <Navbar.Brand href="/">
-                    E - Railway Admin Panel
+                    E - Transport Admin Panel
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                 <Navbar.Collapse id="basic-navbar-nav">
