@@ -10,10 +10,12 @@ class TrainManage extends React.Component {
         this.state = {
             name: '',
             route: 'Select a Route',
+            driver: 'Select a Driver',
             classes: 'Select a Class',
             quantity: '',
             delName: 'Select a Train',
             selectRoutes: [],
+            selectDrivers: [],
             selectTrains: []
         }
 
@@ -25,6 +27,9 @@ class TrainManage extends React.Component {
         })
         fetch(config.baseUrl + "/transroute/trains").then(res => res.json()).then(data => {
             this.setState({selectTrains: data})
+        })
+        fetch(config.baseUrl + "/transroute/drivers").then(res => res.json()).then(data => {
+            this.setState({selectDrivers: data})
         })
     }
 
@@ -40,6 +45,7 @@ class TrainManage extends React.Component {
         const body = {
             name: this.state.name,
             route: this.state.route,
+            driver: this.state.driver,
             classes: this.state.classes,
             quantity: this.state.quantity
         }
@@ -101,6 +107,10 @@ class TrainManage extends React.Component {
             return <option key={route._id} value={route.name}>{route.name}</option>
         })
 
+        const driverSelect = this.state.selectDrivers.map(driver => {
+            return <option key={driver._id} value={driver.name}>{driver.name}</option>
+        })
+
         const trainSelect = this.state.selectTrains.map(train => {
             return <option key={train._id} value={train.name}>{train.name}</option>
         })
@@ -133,6 +143,14 @@ class TrainManage extends React.Component {
                                        value={this.state.route} onChange={this.handleChange}>
                                     <option>Select a Route</option>
                                     {routeSelect}
+                                </Input>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="driverName">Driver Name</Label>
+                                <Input type="select" name="driver" id="driverName"
+                                       value={this.state.driver} onChange={this.handleChange}>
+                                    <option>Select a Driver</option>
+                                    {driverSelect}
                                 </Input>
                             </FormGroup>
                             <FormGroup>

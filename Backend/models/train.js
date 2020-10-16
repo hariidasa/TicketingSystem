@@ -9,6 +9,10 @@ const trainSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    driver:{
+        type: String,
+        required: true
+    },
     classes:{
         type: String,
         required: true

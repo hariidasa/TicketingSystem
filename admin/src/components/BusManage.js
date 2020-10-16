@@ -10,10 +10,12 @@ class BusManage extends React.Component {
         this.state = {
             name: '',
             route: 'Select a Route',
+            driver: 'Select a Driver',
             classes: 'Select a Class',
             quantity: '',
             delName: 'Select a Train',
             selectRoutes: [],
+            selectDrivers: [],
             selectTrains: []
         }
 
@@ -25,6 +27,9 @@ class BusManage extends React.Component {
         })
         fetch(config.baseUrl + "/transroute/buses").then(res => res.json()).then(data => {
             this.setState({selectTrains: data})
+        })
+        fetch(config.baseUrl + "/transroute/drivers").then(res => res.json()).then(data => {
+            this.setState({selectDrivers: data})
         })
     }
 
@@ -40,6 +45,7 @@ class BusManage extends React.Component {
         const body = {
             name: this.state.name,
             route: this.state.route,
+            driver: this.state.driver,
             classes: this.state.classes,
             quantity: this.state.quantity
         }
@@ -101,6 +107,10 @@ class BusManage extends React.Component {
             return <option key={route._id} value={route.name}>{route.name}</option>
         })
 
+        const driverSelect = this.state.selectDrivers.map(driver => {
+            return <option key={driver._id} value={driver.name}>{driver.name}</option>
+        })
+
         const busSelect = this.state.selectTrains.map(bus => {
             return <option key={bus._id} value={bus.name}>{bus.name}</option>
         })
@@ -136,6 +146,14 @@ class BusManage extends React.Component {
                                 </Input>
                             </FormGroup>
                             <FormGroup>
+                                <Label for="driverName">Driver Name</Label>
+                                <Input type="select" name="driver" id="driverName"
+                                       value={this.state.driver} onChange={this.handleChange}>
+                                    <option>Select a Driver</option>
+                                    {driverSelect}
+                                </Input>
+                            </FormGroup>
+                            <FormGroup>
                                 <Label for="routeClass">Bus Class</Label>
                                 <Input type="select" name="classes" id="routeClass"
                                        value={this.state.classes} onChange={this.handleChange}>
@@ -163,7 +181,7 @@ class BusManage extends React.Component {
                     </Col>
                     <Col sm style={{marginTop: "2%", paddingRight: "10%"}}>
                         <h6 style={{width: '75%', textDecoration: 'underline', marginBottom: 20, fontWeight: "bold"}}>
-                            Delete Train
+                            Delete Bus
                         </h6>
                         <Form onSubmit={this.handleSubmitThree}>
                             <FormGroup>
