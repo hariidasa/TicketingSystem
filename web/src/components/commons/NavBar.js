@@ -12,9 +12,9 @@ class NavBar extends Component {
         }
         return (
             <>
-                <Navbar bg="light" expand="sm">
+                <Navbar style={{backgroundColor: '#F58D3C'}} expand="sm">
                     <Navbar.Brand href="/">
-                        Railway E-Ticketing
+                        Public E-Ticketing System
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                     <Navbar.Collapse id="basic-navbar-nav">
@@ -47,13 +47,13 @@ class NavBar extends Component {
                     </div>
                 </Row>
 
-                <Navbar style={{justifyContent: 'space-between'}} bg="dark" variant="dark" expand="sm">
+                <Navbar style={{justifyContent: 'space-between',backgroundColor: '#E69D65'}} expand="sm">
                     <Navbar.Brand href="/"></Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                     <Navbar.Collapse id="basic-navbar-nav" data-collapsed="false">
-                        <Nav className="mx-auto">
-                            <Nav.Link href="/">{'Home'}</Nav.Link>
-                            <Nav.Link href="/contact">{'Contact Us'}</Nav.Link>
+                        <Nav className="mx-auto" >
+                            <Nav.Link style={{color: 'rgba(255, 255, 255,0.6)'}} href="/"><h4>{'Home'}</h4></Nav.Link>
+                            <Nav.Link style={{color: 'rgba(255, 255, 255,0.6)'}} href="/contact"><h4>{'Contact Us'}</h4></Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
