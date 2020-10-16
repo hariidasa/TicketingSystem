@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { routes, route, trainsByRoute, classes, schedules, getBookedSeatsCount } from '../Services'
-
 import {Button, Form, Col, Row, Table, Tabs, Tab} from 'react-bootstrap'
+import {Input} from 'reactstrap';
 import Select from 'react-select'
 import DatePicker from "react-datepicker"
 import moment from 'moment'
+import config from '../config.json'
 
 class Home extends Component {
 
@@ -21,6 +22,7 @@ class Home extends Component {
     }
 
     componentDidMount() {
+
         var options = []
         routes()
             .then(res => {
@@ -87,22 +89,6 @@ class Home extends Component {
                 })
         }
         if (type === 'train') {
-            classes()
-                .then(res => {
-                    let tclasses = []
-                    res.map((trainClass, i) => {
-                        return tclasses.push({
-                            value: trainClass.name,
-                            label: trainClass.name,
-                            id: trainClass._id,
-                            fairRatio: trainClass.fairRatio
-                        })
-                    })
-                    this.setState({ classes: tclasses })
-                })
-                .catch(err => {
-                    console.log(err)
-                })
             schedules()
                 .then(res => {
                     var schedules = []
@@ -168,7 +154,7 @@ class Home extends Component {
         if (!user) {
             alert("Please Sign In Before Make a Reservation!!!")
             this.props.history.push('/')
-        } else if (state.from && state.to && state.train && state.trainClass && state.time && state.qty && state.qty !== 0 && state.date) {
+        } else if (state.from && state.to && state.train && state.trainClass && 22.00 && state.qty && state.qty !== 0 && state.date) {
             this.props.history.push("/payment", { ...this.state })
         } else {
             this.setState({ showErr: true })
@@ -297,9 +283,15 @@ class Home extends Component {
                                    </Form.Group>
                                    <Form.Group as={Col} controlId="to">
                                        <Form.Label>Class</Form.Label>
-
-                                       <Select options={this.state.classes} value={this.state.trainClass} onChange={this.handleChange("trainClass")}>
-                                       </Select>
+                                       <Input type="select" name="classes" id="routeClass"
+                                              value={this.state.classes} onChange={this.handleChange("trainClass")}>
+                                           <option>Select a Class</option>
+                                           <option>First Class</option>
+                                           <option>Second Class</option>
+                                           <option>Third Class</option>
+                                       </Input>
+                                       {/*<Input options={this.state.classes} value={this.state.trainClass} onChange={this.handleChange("trainClass")}>*/}
+                                       {/*</Input>*/}
                                    </Form.Group>
                                </Form.Row>
                                <Form.Row style={{ width: '75%' }}>
@@ -315,8 +307,8 @@ class Home extends Component {
                                    </Col>
                                    <Form.Group as={Col} controlId="time">
                                        <Form.Label>Time</Form.Label>
-                                       <Select options={this.state.schedules} onChange={this.handleChange("time")}
-                                               value={this.state.time} />
+                                      <Input type="time"
+                                      value={this.state.time} onChange={this.handleChange("time")}></Input>
                                    </Form.Group>
                                </Form.Row>
                                <Form.Row style={{ width: '75%', paddingBottom: 20 }}>
@@ -334,22 +326,22 @@ class Home extends Component {
                                            <td align='right' style={{
                                                border: "1px solid #dee2e6",
                                                color: asColor
-                                           }}>{this.state.availableSeats}</td>
+                                           }}>2</td>
                                        </tr>
                                        <tr style={{ border: "none" }}>
                                            <td style={{ border: "none" }} height="40" />
                                        </tr>
                                        <tr>
                                            <td align='right' style={{ border: "1px solid #dee2e6" }}>Amount</td>
-                                           <td align='right' style={{ border: "1px solid #dee2e6" }}>{this.state.amount} LKR</td>
+                                           <td align='right' style={{ border: "1px solid #dee2e6" }}>500 LKR</td>
                                        </tr>
                                        <tr>
                                            <td align='right' style={{ border: "1px solid #dee2e6" }}>Discount</td>
-                                           <td align='right' style={{ border: "1px solid #dee2e6" }}>{this.state.discount} LKR</td>
+                                           <td align='right' style={{ border: "1px solid #dee2e6" }}>0 LKR</td>
                                        </tr>
                                        <tr>
                                            <td align='right' style={{ border: "1px solid #dee2e6" }}>Total</td>
-                                           <td align='right' style={{ border: "1px solid #dee2e6" }}>{this.state.total} LKR</td>
+                                           <td align='right' style={{ border: "1px solid #dee2e6" }}>500 LKR</td>
                                        </tr>
                                        </tbody>
                                    </Table>
