@@ -12,7 +12,7 @@ const login = require('./routers/login')
 const register = require('./routers/register')
 const user = require('./routers/user')
 const admin = require('./routers/admin')
-const railway = require('./routers/busroute')
+const railway = require('./routers/transroute')
 
 //Body parser middleware
 app.use(bodyParser.urlencoded({extended:false}));
