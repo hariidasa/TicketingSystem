@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const trainSchema = mongoose.Schema({
+const busSchema = mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -9,10 +9,18 @@ const trainSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    driver:{
+        type: String,
+        required: true
+    },
     classes:{
-        type: Array,
+        type: String,
+        required: true
+    },
+    quantity:{
+        type: String,
         required: true
     }
 })
 
-const bus = module.exports = mongoose.model('Train', trainSchema)
+const bus = module.exports = mongoose.model('Bus', busSchema)
