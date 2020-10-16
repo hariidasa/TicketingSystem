@@ -3,7 +3,7 @@ import {Container, Row, Col, Button, Form, FormGroup, Label, Input} from 'reacts
 import {toast} from 'react-toastify';
 import config from '../config';
 
-class TrainManage extends React.Component {
+class BusManage extends React.Component {
 
     constructor(props) {
         super(props);
@@ -23,7 +23,7 @@ class TrainManage extends React.Component {
         fetch(config.baseUrl + "/transroute/routes").then(res => res.json()).then(data => {
             this.setState({selectRoutes: data})
         })
-        fetch(config.baseUrl + "/transroute/trains").then(res => res.json()).then(data => {
+        fetch(config.baseUrl + "/transroute/buses").then(res => res.json()).then(data => {
             this.setState({selectTrains: data})
         })
     }
@@ -52,11 +52,11 @@ class TrainManage extends React.Component {
             }
         }
 
-        fetch(config.baseUrl + "/transroute/train", option).then(res => res.json()).then(res => {
+        fetch(config.baseUrl + "/transroute/bus", option).then(res => res.json()).then(res => {
             if (res.routeExist) {
-                toast.error("Route Already Exist")
+                toast.error("Bus Already Exist")
             } else {
-                toast.success("Train Created Successfully")
+                toast.success("Bus Created Successfully")
                 setTimeout(() => {
                     window.location.reload();
                 }, 2000)
@@ -81,14 +81,14 @@ class TrainManage extends React.Component {
             }
         }
 
-        fetch(config.baseUrl + "/transroute/train", option).then(res => res.json()).then(res => {
+        fetch(config.baseUrl + "/transroute/bus", option).then(res => res.json()).then(res => {
             if (res.status) {
-                toast.success("Train Deleted Successfully")
+                toast.success("Bus Deleted Successfully")
                 setTimeout(() => {
                     window.location.reload();
                 }, 2000)
             } else {
-                toast.error("Error Deleting the Route")
+                toast.error("Error Deleting the Bus")
             }
         });
 
@@ -101,8 +101,8 @@ class TrainManage extends React.Component {
             return <option key={route._id} value={route.name}>{route.name}</option>
         })
 
-        const trainSelect = this.state.selectTrains.map(train => {
-            return <option key={train._id} value={train.name}>{train.name}</option>
+        const busSelect = this.state.selectTrains.map(bus => {
+            return <option key={bus._id} value={bus.name}>{bus.name}</option>
         })
         return (
             <Container style={{width: "80%", marginTop: "1%", marginBottom: "1%"}}>
@@ -113,17 +113,17 @@ class TrainManage extends React.Component {
                         marginBottom: 20,
                         paddingTop: 5
                     }}>
-                    <h4>Manage&nbsp;Trains</h4>
+                    <h4>Manage&nbsp;Buses</h4>
                 </Row>
                 <Row>
                     <Col sm style={{marginTop: "2%", paddingRight: "10%"}}>
                         <h6 style={{width: '75%', textDecoration: 'underline', marginBottom: 20, fontWeight: "bold"}}>
-                            Add New Train
+                            Add New bus
                         </h6>
                         <Form onSubmit={this.handleSubmitOne}>
                             <FormGroup>
-                                <Label for="trainName">Train Name</Label>
-                                <Input type="text" name="name" id="trainName" placeholder="New Train Name"
+                                <Label for="busName">Bus Name</Label>
+                                <Input type="text" name="name" id="busName" placeholder="New Bus Name"
                                        value={this.state.name} onChange={this.handleChange}>
                                 </Input>
                             </FormGroup>
@@ -136,7 +136,7 @@ class TrainManage extends React.Component {
                                 </Input>
                             </FormGroup>
                             <FormGroup>
-                                <Label for="routeClass">Train Class</Label>
+                                <Label for="routeClass">Bus Class</Label>
                                 <Input type="select" name="classes" id="routeClass"
                                        value={this.state.classes} onChange={this.handleChange}>
                                     <option>Select a Class</option>
@@ -155,7 +155,7 @@ class TrainManage extends React.Component {
                             {this.state.name !== "" && this.state.route !== "Select a Route" && this.state.class !== "Select a Class" && this.state.quantity !== "" && (
                                 <div>
                                     <FormGroup>
-                                        <Button color="primary">Create Train</Button>
+                                        <Button color="primary">Create Bus</Button>
                                     </FormGroup>
                                 </div>
                             )}
@@ -167,14 +167,14 @@ class TrainManage extends React.Component {
                         </h6>
                         <Form onSubmit={this.handleSubmitThree}>
                             <FormGroup>
-                                <Label for="routeDeleteSelect">Train Name</Label>
+                                <Label for="routeDeleteSelect">Bus Name</Label>
                                 <Input type="select" name="delName" id="routeDeleteSelect"
                                        value={this.state.delName} onChange={this.handleChange}>
-                                    <option>Select a Train</option>
-                                    {trainSelect}
+                                    <option>Select a Bus</option>
+                                    {busSelect}
                                 </Input>
                             </FormGroup>
-                            {this.state.delName !== "Select a Train" && (
+                            {this.state.delName !== "Select a Bus" && (
                                 <FormGroup>
                                     <Button color="danger">Delete Route</Button>
                                 </FormGroup>
@@ -188,4 +188,4 @@ class TrainManage extends React.Component {
     }
 }
 
-export default TrainManage;
+export default BusManage;

@@ -3,27 +3,21 @@ import {Container, Row, Col, Button, Form, FormGroup, Label, Input} from 'reacts
 import {toast} from 'react-toastify';
 import config from '../config';
 
-class RouteManage extends React.Component {
+class DriverManage extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
             name: '',
-            from: '',
-            to: '',
-            selectName: 'Select a Route',
-            route: [],
-            stationName: '',
-            fair: 0,
             delName: 'Select a Route',
-            selectRoutes: []
+            selectDrivers: []
         }
 
     }
 
     componentDidMount() {
-        fetch(config.baseUrl + "/transroute/routes").then(res => res.json()).then(data => {
-            this.setState({selectRoutes: data})
+        fetch(config.baseUrl + "/transroute/drivers").then(res => res.json()).then(data => {
+            this.setState({selectDrivers: data})
         })
     }
 
@@ -37,9 +31,7 @@ class RouteManage extends React.Component {
         event.stopPropagation()
 
         const body = {
-            name: this.state.name,
-            from: this.state.from,
-            to: this.state.to
+            name: this.state.name
         }
 
         const option = {
@@ -50,11 +42,11 @@ class RouteManage extends React.Component {
             }
         }
 
-        fetch(config.baseUrl + "/transroute/route", option).then(res => res.json()).then(res => {
+        fetch(config.baseUrl + "/transroute/driver", option).then(res => res.json()).then(res => {
             if (res.routeExist) {
                 toast.error("Route Already Exist")
             } else {
-                toast.success("Route Created Successfully")
+                toast.success("Driver Created Successfully")
                 setTimeout(() => {
                     window.location.reload();
                 }, 2000)
@@ -71,8 +63,6 @@ class RouteManage extends React.Component {
 
             const body = {
                 name: this.state.selectName,
-                station: this.state.stationName,
-                fair: this.state.fair
             }
 
             const option = {
@@ -83,7 +73,7 @@ class RouteManage extends React.Component {
                 }
             }
 
-            fetch(config.baseUrl + "/transroute/route", option).then(res => res.json()).then(res => {
+            fetch(config.baseUrl + "/transroute/driver", option).then(res => res.json()).then(res => {
                 if (res.stationExist) {
                     toast.error("Station Already Exist")
                 } else {
@@ -116,9 +106,9 @@ class RouteManage extends React.Component {
             }
         }
 
-        fetch(config.baseUrl + "/transroute/route", option).then(res => res.json()).then(res => {
+        fetch(config.baseUrl + "/transroute/driver", option).then(res => res.json()).then(res => {
             if (res.status) {
-                toast.success("Route Deleted Successfully")
+                toast.success("Driver Deleted Successfully")
                 setTimeout(() => {
                     window.location.reload();
                 }, 2000)
@@ -132,7 +122,7 @@ class RouteManage extends React.Component {
 
     render() {
         console.log(this.state)
-        const routeSelect = this.state.selectRoutes.map(route => {
+        const routeSelect = this.state.selectDrivers.map(route => {
             return <option key={route._id} value={route.name}>{route.name}</option>
         })
 
@@ -150,50 +140,38 @@ class RouteManage extends React.Component {
                 <Row>
                     <Col sm style={{marginTop: "2%", paddingRight: "10%"}}>
                         <h6 style={{width: '75%', textDecoration: 'underline', marginBottom: 20, fontWeight: "bold"}}>
-                            Add New Routes
+                            Add New Drivers
                         </h6>
                         <Form onSubmit={this.handleSubmitOne}>
                             <FormGroup>
-                                <Label for="routeNum">Route ID</Label>
-                                <Input type="text" name="name" id="routeNum"
-                                       placeholder="New Route ID" value={this.state.name}
+                                <Label for="routeName">Driver Name</Label>
+                                <Input type="text" name="name" id="routeName"
+                                       placeholder="New Driver Name" value={this.state.name}
                                        onChange={this.handleChange}/>
                             </FormGroup>
+                            {this.state.name !== '' &&
                             <FormGroup>
-                                <Label for="routeFrom">From</Label>
-                                <Input type="text" name="from" id="routeFrom"
-                                       placeholder="New Route From" value={this.state.from}
-                                       onChange={this.handleChange}/>
-                            </FormGroup>
-                            <FormGroup>
-                                <Label for="routeTo">Route To</Label>
-                                <Input type="text" name="to" id="routeTo"
-                                       placeholder="New Route To" value={this.state.to}
-                                       onChange={this.handleChange}/>
-                            </FormGroup>
-                            {this.state.name !== '' && this.state.from !== '' && this.state.to !== '' &&
-                            <FormGroup>
-                                <Button color="primary">Create Route</Button>
+                                <Button color="primary">Create Driver</Button>
                             </FormGroup>
                             }
                         </Form>
                     </Col>
                     <Col sm style={{marginTop: "2%", paddingRight: "10%"}}>
                         <h6 style={{width: '75%', textDecoration: 'underline', marginBottom: 20, fontWeight: "bold"}}>
-                            Delete Routes
+                            Delete Drivers
                         </h6>
                         <Form onSubmit={this.handleSubmitThree}>
                             <FormGroup>
-                                <Label for="routeDeleteSelect">Route Name</Label>
+                                <Label for="routeDeleteSelect">Driver Name</Label>
                                 <Input type="select" name="delName" id="routeDeleteSelect"
                                        value={this.state.delName} onChange={this.handleChange}>
-                                    <option>Select a Route</option>
+                                    <option>Select a Driver</option>
                                     {routeSelect}
                                 </Input>
                             </FormGroup>
                             {this.state.delName !== "Select a Route" && (
                                 <FormGroup>
-                                    <Button color="danger">Delete Route</Button>
+                                    <Button color="danger">Delete Driver</Button>
                                 </FormGroup>
                             )}
                         </Form>
@@ -205,4 +183,4 @@ class RouteManage extends React.Component {
     }
 }
 
-export default RouteManage;
+export default DriverManage;
