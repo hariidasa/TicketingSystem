@@ -43,7 +43,7 @@ class NavBar extends Component {
 
                 <Row style={{alignItems: 'center', justifyContent: 'center', width: '100%', margin: 0}}>
                     <div style={{width: '100%'}}>
-                        <Image style={{width: '100%'}} src={require("../../images/railway2.jpg")}/>
+                        <Image style={{width: '100%'}} src={require("../../images/publicTransport.jpg")}/>
                     </div>
                 </Row>
 
@@ -52,8 +52,9 @@ class NavBar extends Component {
                     <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                     <Navbar.Collapse id="basic-navbar-nav" data-collapsed="false">
                         <Nav className="mx-auto" >
-                            <Nav.Link style={{color: 'rgba(255, 255, 255,0.6)'}} href="/"><h4>{'Home'}</h4></Nav.Link>
-                            <Nav.Link style={{color: 'rgba(255, 255, 255,0.6)'}} href="/contact"><h4>{'Contact Us'}</h4></Nav.Link>
+                            <Nav.Link style={{color: 'rgba(255, 255, 255,0.8)'}} href="/"><h3>{'Home'}</h3></Nav.Link>
+                            <Nav.Link style={{color: 'rgba(255, 255, 255,0.8)'}} href="/topUp"><h5>{'Reload Credits'}</h5></Nav.Link>
+                            <Nav.Link style={{color: 'rgba(255, 255, 255,0.8)'}} href="/contact"><h5>{'Contact Us'}</h5></Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>

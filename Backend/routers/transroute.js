@@ -11,79 +11,6 @@ const configs = require('../config.json')
 const qrcode = require('qrcode');
 const driverModel = require('../models/driver')
 
-// router.get('/transroute/bookings', async (req, res) => {
-//     try {
-//         const result = await reservationModel.find()
-//         res.status(200).json(result)
-//     } catch (err) {
-//         res.status(500).json(err)
-//     }
-// });
-//
-// router.post('/transroute/booking', async (req, res) => {
-//
-//     const query = { name: req.body.name }
-//     reservationModel.find(query, (err, route) => {
-//         if (err) {
-//             console.log(err);
-//             res.status(500).json(err);
-//         } else {
-//             if (route.length != 0) {
-//                 res.status(200).json({ driverExist: true });
-//             } else {
-//
-//                 let routes = new reservationModel(req.body);
-//                 routes.save(err => {
-//                     if (err) {
-//                         console.log(err);
-//                         res.status(500).json(err);
-//                     } else {
-//                         res.status(200).json({ driverExist: false });
-//                     }
-//                 });
-//
-//             }
-//
-//         }
-//     });
-// });
-//
-// router.put('/transroute/booking', async (req, res) => {
-//
-//     const body = {
-//         name: req.body.station,
-//     }
-//     const query = { name: req.body.name }
-//     await reservationModel.find(query, async (err, route) => {
-//
-//         if (err) {
-//             console.log(err);
-//             res.status(500).json(err);
-//         } else {
-//             var found = null
-//             found = await route[0].route.find(function (data) {
-//                 return data.name === req.body.station;
-//             });
-//
-//             if (found) {
-//                 res.status(200).json({ stationExist: true });
-//             } else {
-//                 reservationModel.updateOne(query, { $push: { route: body } }, (err) => {
-//                     if (err) {
-//                         console.log(err)
-//                         res.status(500).json(err);
-//                     } else {
-//                         res.status(200).json({ stationExist: false });
-//                     }
-//                 })
-//             }
-//
-//         }
-//     })
-//
-// });
-
-
 router.get('/transroute/trains', async (req, res) => {
     try {
         const result = await trainModel.find()
@@ -92,6 +19,17 @@ router.get('/transroute/trains', async (req, res) => {
         res.status(500).json(err)
     }
 });
+
+router.get('/transroute/trains/:route', async (req, res) => {
+    try {
+        const route = await routeModel.findOne({ '_id': req.params.route })
+        const result = await trainModel.find({ route: route.name })
+        res.status(200).json(result)
+    } catch (err) {
+        res.status(500).json(err)
+    }
+});
+
 
 router.post('/transroute/train', async (req, res) => {
 
@@ -377,7 +315,7 @@ router.get('/transroute/buses', async (req, res) => {
 router.get('/transroute/buses/:route', async (req, res) => {
     try {
         const route = await routeModel.findOne({ '_id': req.params.route })
-        const result = await trainModel.find({ route: route.name })
+        const result = await busModel.find({ route: route.name })
         res.status(200).json(result)
     } catch (err) {
         res.status(500).json(err)

@@ -16,6 +16,7 @@ class Home extends Component {
     render() {
         return (
             <div style={{ width: '100%' }}>
+                <Image style={{ width: '100%' }} src={require("../images/publicTrans2.jpg")} />
             </div>
         );
     }
