@@ -21,27 +21,18 @@ router.post('/register', async (req, res) => {
         });
 
         if (exist) {
-            if (exist.googleId) {
-                res.status(200).json({exist: true, _id: exist._id})
-            } else {
-                res.status(409).json({exist: true})
-            }
+            res.status(409).json({exist: true})
         } else {
             var discount = false
             if (body.nic) {
                 discount = await client.validateNIC(body.nic)
             }
-            var type = (body.googleId) ? "google" : "regular";
+            var type = "regular";
 
             //creating user
             var user = UserFactory.createUser({...body, type, discount});
 
-            //sending email
-            const html = '<p>Hi ' + user.fname + ',<br><br> Thank you for registering with public transport ticketing system.<br><br>To activate your account, please click the following link and sign in now.<br>' + configs.backendUrl + '/users/reg/' + Buffer.from(body.email).toString('base64') + '</p> '
-            {type === "regular" && client.sendEmail({...body, html, subject: 'Confirm Your Email'})}
-
-
-            var result = await user.save()
+            var result = user.save()
             res.status(200).json(result)
         }
     } catch (err) {

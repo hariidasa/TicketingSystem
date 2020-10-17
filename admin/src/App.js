@@ -22,6 +22,8 @@ import Reports from './components/Reports'
 import ReportCharts from './components/ReportCharts'
 import BarChart from './components/BarChart'
 import PieChart from './components/PieChart'
+import DriverManage from "./components/DriverManage";
+import BusManage from "./components/BusManage";
 
 
 class App extends Component {
@@ -107,6 +109,12 @@ class App extends Component {
                   <Route path="/trainManage" render={(props) => {
                     return (<TrainManage {...props} />);
                   }}/>
+                  <Route path="/BusManage" render={(props) => {
+                    return (<BusManage {...props} />);
+                  }}/>
+                  <Route path="/DriverManage" render={(props) => {
+                    return (<DriverManage {...props} />);
+                  }}/>
                   <Route path="/reports" render={(props) => {
                     return (<Reports {...props} />);
                   }}/>
@@ -123,8 +131,6 @@ class App extends Component {
               </Suspense>
             </Router>
           </div>
-
-          <Footer />
 
           <ToastContainer
               autoClose={3000}

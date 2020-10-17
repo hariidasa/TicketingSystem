@@ -9,6 +9,8 @@ class RouteManage extends React.Component {
         super(props);
         this.state = {
             name: '',
+            from: '',
+            to: '',
             selectName: 'Select a Route',
             route: [],
             stationName: '',
@@ -20,7 +22,7 @@ class RouteManage extends React.Component {
     }
 
     componentDidMount() {
-        fetch(config.baseUrl + "/railway/routers").then(res => res.json()).then(data => {
+        fetch(config.baseUrl + "/transroute/routes").then(res => res.json()).then(data => {
             this.setState({selectRoutes: data})
         })
     }
@@ -36,7 +38,8 @@ class RouteManage extends React.Component {
 
         const body = {
             name: this.state.name,
-            route: []
+            from: this.state.from,
+            to: this.state.to
         }
 
         const option = {
@@ -47,7 +50,7 @@ class RouteManage extends React.Component {
             }
         }
 
-        fetch(config.baseUrl + "/railway/route", option).then(res => res.json()).then(res => {
+        fetch(config.baseUrl + "/transroute/route", option).then(res => res.json()).then(res => {
             if (res.routeExist) {
                 toast.error("Route Already Exist")
             } else {
@@ -80,7 +83,7 @@ class RouteManage extends React.Component {
                 }
             }
 
-            fetch(config.baseUrl + "/railway/route", option).then(res => res.json()).then(res => {
+            fetch(config.baseUrl + "/transroute/route", option).then(res => res.json()).then(res => {
                 if (res.stationExist) {
                     toast.error("Station Already Exist")
                 } else {
@@ -113,7 +116,7 @@ class RouteManage extends React.Component {
             }
         }
 
-        fetch(config.baseUrl + "/railway/route", option).then(res => res.json()).then(res => {
+        fetch(config.baseUrl + "/transroute/route", option).then(res => res.json()).then(res => {
             if (res.status) {
                 toast.success("Route Deleted Successfully")
                 setTimeout(() => {
@@ -151,12 +154,24 @@ class RouteManage extends React.Component {
                         </h6>
                         <Form onSubmit={this.handleSubmitOne}>
                             <FormGroup>
-                                <Label for="routeName">Route Name</Label>
-                                <Input type="text" name="name" id="routeName"
-                                       placeholder="New Route Name" value={this.state.name}
+                                <Label for="routeNum">Route ID</Label>
+                                <Input type="text" name="name" id="routeNum"
+                                       placeholder="New Route ID" value={this.state.name}
                                        onChange={this.handleChange}/>
                             </FormGroup>
-                            {this.state.name !== '' &&
+                            <FormGroup>
+                                <Label for="routeFrom">From</Label>
+                                <Input type="text" name="from" id="routeFrom"
+                                       placeholder="New Route From" value={this.state.from}
+                                       onChange={this.handleChange}/>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="routeTo">Route To</Label>
+                                <Input type="text" name="to" id="routeTo"
+                                       placeholder="New Route To" value={this.state.to}
+                                       onChange={this.handleChange}/>
+                            </FormGroup>
+                            {this.state.name !== '' && this.state.from !== '' && this.state.to !== '' &&
                             <FormGroup>
                                 <Button color="primary">Create Route</Button>
                             </FormGroup>
@@ -180,42 +195,6 @@ class RouteManage extends React.Component {
                                 <FormGroup>
                                     <Button color="danger">Delete Route</Button>
                                 </FormGroup>
-                            )}
-                        </Form>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col sm style={{marginTop: "2%", paddingRight: "10%"}}>
-                        <h6 style={{width: '75%', textDecoration: 'underline', marginBottom: 20, fontWeight: "bold"}}>
-                            Edit Existing Routes
-                        </h6>
-                        <Form onSubmit={this.handleSubmitTwo}>
-                            <FormGroup>
-                                <Label for="routeNameSelect">Route Name</Label>
-                                <Input type="select" name="selectName" id="routeNameSelect"
-                                       value={this.state.selectName} onChange={this.handleChange}>
-                                    <option>Select a Route</option>
-                                    {routeSelect}
-                                </Input>
-                            </FormGroup>
-                            {this.state.selectName !== "Select a Route" && (
-                                <div>
-                                    <FormGroup>
-                                        <Label for="station">Station Name</Label>
-                                        <Input type="text" name="stationName" id="station"
-                                               placeholder="New Station Name" value={this.state.stationName}
-                                               onChange={this.handleChange}/>
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Label for="fairCost"> Fair </Label>
-                                        <Input type="number" name="fair" id="fairCost"
-                                               placeholder="Fair Amount" min={0} value={this.state.fair}
-                                               onChange={this.handleChange}/>
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Button color="primary">Update Route</Button>
-                                    </FormGroup>
-                                </div>
                             )}
                         </Form>
                     </Col>
