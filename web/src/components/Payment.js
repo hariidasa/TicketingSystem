@@ -78,7 +78,7 @@ class Payment extends Component {
 
     createReservation = (paymentMethod) => {
         const state = this.state
-        var user = localStorage.getItem('user')
+        var user = localStorage.getItem('users')
         if (user) {
             user = JSON.parse(user)
             const reservation = {

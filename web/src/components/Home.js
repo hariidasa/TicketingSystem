@@ -5,23 +5,49 @@ import {Input} from 'reactstrap';
 import Select from 'react-select'
 import DatePicker from "react-datepicker"
 import moment from 'moment'
+import TimePicker from 'react-bootstrap-time-picker';
 import config from '../config.json'
 
 class Home extends Component {
 
     constructor(props) {
         super(props);
+        this.handleTimeChange = this.handleTimeChange.bind(this);
         this.state = {
             qty: '',
             fromOptions: [],
             toOptions: [],
+            classes:[],
+            selClass:'',
             trains: [],
             errMsg: 'Required fields empty or invalid!!!',
             showErr: false,
+            time: 0
+
         };
     }
 
+    handleTimeChange(time) {
+        console.log(time);     // <- prints "3600" if "01:00" is picked
+        this.setState({ time });
+    }
+
     componentDidMount() {
+
+        fetch("http://localhost:8000/transroute/classes")
+            .then((response) => {
+                return response.json();
+            })
+            .then(data => {
+                let teamsFromApi = data.map(classes => {
+                    return {value: classes, display: classes}
+                });
+                this.setState({
+                    classes: [{value: '', display: '(Select your class)'}].concat(teamsFromApi)
+                });
+            }).catch(error => {
+            console.log(error);
+        });
 
         var options = []
         routes()
@@ -88,19 +114,6 @@ class Home extends Component {
                     console.log(err)
                 })
         }
-        if (type === 'train') {
-            schedules()
-                .then(res => {
-                    var schedules = []
-                    res.map((schedule, i) => {
-                        return schedules.push({ value: schedule.time, label: schedule.time, id: schedule._id })
-                    })
-                    this.setState({ schedules: schedules })
-                })
-                .catch(err => {
-                    console.log(err)
-                })
-        }
 
         this.updateAvailableSeats()
 
@@ -154,7 +167,7 @@ class Home extends Component {
         if (!user) {
             alert("Please Sign In Before Make a Reservation!!!")
             this.props.history.push('/')
-        } else if (state.from && state.to && state.train && state.trainClass && 22.00 && state.qty && state.qty !== 0 && state.date) {
+        } else if (state.from && state.to && state.train && state.trainClass && state.time && state.qty && state.qty !== 0 && state.date) {
             this.props.history.push("/payment", { ...this.state })
         } else {
             this.setState({ showErr: true })
@@ -290,8 +303,6 @@ class Home extends Component {
                                            <option>Second Class</option>
                                            <option>Third Class</option>
                                        </Input>
-                                       {/*<Input options={this.state.classes} value={this.state.trainClass} onChange={this.handleChange("trainClass")}>*/}
-                                       {/*</Input>*/}
                                    </Form.Group>
                                </Form.Row>
                                <Form.Row style={{ width: '75%' }}>
@@ -307,8 +318,7 @@ class Home extends Component {
                                    </Col>
                                    <Form.Group as={Col} controlId="time">
                                        <Form.Label>Time</Form.Label>
-                                      <Input type="time"
-                                      value={this.state.time} onChange={this.handleChange("time")}></Input>
+                                       <TimePicker onChange={this.handleTimeChange} value={this.state.time} />
                                    </Form.Group>
                                </Form.Row>
                                <Form.Row style={{ width: '75%', paddingBottom: 20 }}>
