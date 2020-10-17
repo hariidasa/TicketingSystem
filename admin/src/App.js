@@ -1,20 +1,29 @@
-import React, { Component, Suspense } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import 'react-toastify/dist/ReactToastify.css'
+import React, { Component, Suspense } from 'react'
 import 'react-datepicker/dist/react-datepicker.css'
-import './App.css'
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import 'bootstrap-css-only/css/bootstrap.min.css';
+import 'mdbreact/dist/css/mdb.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
-
+import 'react-toastify/dist/ReactToastify.css'
+import './App.css'
+import AccountSettings from './components/AccountSettings'
 import NavBar from './components/commons/NavBar'
+import Footer from './components/Footer'
+import Home from './components/Home'
+import AdminManagement from './components/AdminManagement'
+import UserManagement from './components/UserManagement'
 import Login from './components/Login'
 import Register from './components/Register'
-import Home from './components/Home'
-import Contact from './components/Contact'
-import Reservations from './components/Reservations'
-import Payment from './components/Payment'
-import AccountSettings from './components/AccountSettings'
-import Ticket from './components/Ticket'
+import RouteManage from './components/RouteManage'
+import TrainManage from './components/TrainManage'
+import Reports from './components/Reports'
+import ReportCharts from './components/ReportCharts'
+import BarChart from './components/BarChart'
+import PieChart from './components/PieChart'
+import DriverManage from "./components/DriverManage";
+import BusManage from "./components/BusManage";
 
 
 class App extends Component {
@@ -90,11 +99,34 @@ class App extends Component {
               <Suspense fallback={<div>Loading...</div>}>
                 <Switch>
                   <Route exact path="/" component={Home} />
-                  <Route path="/contact" component={Contact} />
-                  <Route path="/reservations" component={Reservations} />
-                  <Route path="/payment" component={Payment} />
+                  <Route exact path="/admins" component={AdminManagement} />
+                  <Route exact path="/routs" component={Home} />
+                  <Route exact path="/users" component={UserManagement} />
                   <Route path="/account" component={AccountSettings} />
-                  <Route path="/ticket/:rid" component={Ticket} />
+                  <Route path="/routeManage" render={(props) => {
+                    return (<RouteManage {...props} />);
+                  }}/>
+                  <Route path="/trainManage" render={(props) => {
+                    return (<TrainManage {...props} />);
+                  }}/>
+                  <Route path="/BusManage" render={(props) => {
+                    return (<BusManage {...props} />);
+                  }}/>
+                  <Route path="/DriverManage" render={(props) => {
+                    return (<DriverManage {...props} />);
+                  }}/>
+                  <Route path="/reports" render={(props) => {
+                    return (<Reports {...props} />);
+                  }}/>
+                  <Route path="/reportCharts" render={(props) => {
+                    return (<ReportCharts {...props} />);
+                  }}/>
+                  <Route path="/barChart" render={(props) => {
+                    return (<BarChart {...props} />);
+                  }}/>
+                  <Route path="/pieChart" render={(props) => {
+                    return (<PieChart {...props} />);
+                  }}/>
                 </Switch>
               </Suspense>
             </Router>
