@@ -39,10 +39,8 @@ const userSchema = mongoose.Schema({
     loginCount : {
         type: Number,
         default: 0
-    },
-    googleId: {
-        type : String
     }
+
 })
 
 const user = module.exports = mongoose.model('User', userSchema)

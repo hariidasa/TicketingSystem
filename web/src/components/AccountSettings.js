@@ -16,7 +16,8 @@ class AccountSettings extends Component {
             phone: '',
             nic: '',
             email: '',
-            address: ''
+            address: '',
+            password:''
         }
         this.baseState = this.state
     }
@@ -32,6 +33,7 @@ class AccountSettings extends Component {
                 nic: user.nic || '',
                 email: user.email,
                 address: user.address,
+                password:user.password,
                 open: false,
                 proOpen: false,
                 googleId: user.googleId
@@ -72,12 +74,12 @@ class AccountSettings extends Component {
         if (form.checkValidity() === true) {
             var body = {...this.state}
             if (this.state.newPassword) {
-                if (parseInt(user.password) !== getHash(this.state.oldPassword)) {
+                if (parseInt(user.password) !== this.state.oldPassword) {
                     toast.error("Old password does not match");
                 } else if (this.state.newPassword !== this.state.cPassword) {
                     toast.error("Password doesn't match");
                 } else {
-                    body = {...body, password: getHash(this.state.newPassword)}
+                    body = {...body, password: this.state.newPassword}
                     this.updateUserData(body, id);
                 }
             } else {

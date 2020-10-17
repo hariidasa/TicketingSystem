@@ -11,27 +11,27 @@ export function register(body) {
 }
 
 export function routes() {
-    return callGet(baseUrl + '/busroute/routes');
+    return callGet(baseUrl + '/transroute/routes');
 }
 
 export function route(station) {
-    return callGet(baseUrl + '/busroute/route/' + station);
+    return callGet(baseUrl + '/transroute/route/' + station);
 }
 
 export function trains() {
-    return callGet(baseUrl + '/busroute/buses/');
+    return callGet(baseUrl + '/transroute/buses/');
 }
 
 export function trainsByRoute(route) {
-    return callGet(baseUrl + '/busroute/buses/' + route);
+    return callGet(baseUrl + '/transroute/buses/' + route);
 }
 
 export function classes() {
-    return callGet(baseUrl + '/busroute/classes/');
+    return callGet(baseUrl + '/transroute/classes/');
 }
 
 export function schedules() {
-    return callGet(baseUrl + '/busroute/schedules/');
+    return callGet(baseUrl + '/transroute/schedules/');
 }
 
 export function validateCard(body) {
@@ -43,19 +43,19 @@ export function validatePhone(body) {
 }
 
 export function makeReservation(body) {
-    return callPost(baseUrl + '/busroute/reservations', body);
+    return callPost(baseUrl + '/transroute/reservations', body);
 }
 
 export function getReservations(user) {
-    return callGet(baseUrl + '/busroute/users/' + user + '/reservations/');
+    return callGet(baseUrl + '/transroute/users/' + user + '/reservations/');
 }
 
 export function getReservation(rid) {
-    return callGet(baseUrl + '/busroute/reservations/' + rid);
+    return callGet(baseUrl + '/transroute/reservations/' + rid);
 }
 
 export function deleteReservation(id) {
-    return callDelete(baseUrl + '/busroute/reservations/' + id);
+    return callDelete(baseUrl + '/transroute/reservations/' + id);
 }
 
 export function updateAccount(body, id) {
@@ -63,11 +63,11 @@ export function updateAccount(body, id) {
 }
 
 export function contact(body) {
-    return callPost(baseUrl + '/busroute/contact', body);
+    return callPost(baseUrl + '/transroute/contact', body);
 }
 
 export function getBookedSeatsCount(train, trainClass, date, time) {
-    return callGet(baseUrl + "/busroute/reservations/buses/" + train + "/class/" + trainClass + "/date/" + date + "/time/" + time);
+    return callGet(baseUrl + "/transroute/reservations/buses/" + train + "/class/" + trainClass + "/date/" + date + "/time/" + time);
 }
 
 const callGet = (url) => {

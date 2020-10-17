@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-
 import { Modal, Button, Form, Col } from 'react-bootstrap'
 import { register } from '../Services'
 import { toast } from 'react-toastify'

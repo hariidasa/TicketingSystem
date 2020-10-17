@@ -7,9 +7,9 @@ class Footer extends Component {
             <div>
                 <br/>
                 <footer className="page-footer font-small" style={{
-                    backgroundColor: '#4B4A4A',
+                    backgroundColor: '#E69D65',
                     color: 'rgba(255, 255, 255, 0.6)',
-                    position: 'absolute',
+                    position: 'bottom',
                     bottom: 0,
                     width: '100%'
                 }}>
