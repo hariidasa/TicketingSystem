@@ -85,7 +85,7 @@ class Payment extends Component {
                 ...paymentMethod,
                 user: user._id,
                 email: user.email,
-                from: state.from.value,
+                //from: state.from.value,
                 to: state.to.value,
                 train: state.train.value,
                 trainClass: state.trainClass.value,
