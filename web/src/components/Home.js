@@ -1,26 +1,54 @@
 import React, { Component } from 'react'
 import { routes, route, trainsByRoute, classes, schedules, getBookedSeatsCount } from '../Services'
-
-import { Button, Form, Col, Row, Table } from 'react-bootstrap'
+import {Button, Form, Col, Row, Table, Tabs, Tab} from 'react-bootstrap'
+import {Input} from 'reactstrap';
 import Select from 'react-select'
 import DatePicker from "react-datepicker"
 import moment from 'moment'
+import TimePicker from 'react-bootstrap-time-picker';
+import config from '../config.json'
 
 class Home extends Component {
 
     constructor(props) {
         super(props);
+        this.handleTimeChange = this.handleTimeChange.bind(this);
         this.state = {
             qty: '',
             fromOptions: [],
             toOptions: [],
+            classes:[],
+            selClass:'',
             trains: [],
             errMsg: 'Required fields empty or invalid!!!',
             showErr: false,
+            time: 0
+
         };
     }
 
+    handleTimeChange(time) {
+        console.log(time);     // <- prints "3600" if "01:00" is picked
+        this.setState({ time });
+    }
+
     componentDidMount() {
+
+        fetch("http://localhost:8000/transroute/classes")
+            .then((response) => {
+                return response.json();
+            })
+            .then(data => {
+                let teamsFromApi = data.map(classes => {
+                    return {value: classes, display: classes}
+                });
+                this.setState({
+                    classes: [{value: '', display: '(Select your class)'}].concat(teamsFromApi)
+                });
+            }).catch(error => {
+            console.log(error);
+        });
+
         var options = []
         routes()
             .then(res => {
@@ -81,35 +109,6 @@ class Home extends Component {
                         })
                     })
                     this.setState({ trains: options })
-                })
-                .catch(err => {
-                    console.log(err)
-                })
-        }
-        if (type === 'train') {
-            classes()
-                .then(res => {
-                    var classes = []
-                    res.map((trainClass, i) => {
-                        return classes.push({
-                            value: trainClass.name,
-                            label: trainClass.name,
-                            id: trainClass._id,
-                            fairRatio: trainClass.fairRatio
-                        })
-                    })
-                    this.setState({ classes: classes })
-                })
-                .catch(err => {
-                    console.log(err)
-                })
-            schedules()
-                .then(res => {
-                    var schedules = []
-                    res.map((schedule, i) => {
-                        return schedules.push({ value: schedule.time, label: schedule.time, id: schedule._id })
-                    })
-                    this.setState({ schedules: schedules })
                 })
                 .catch(err => {
                     console.log(err)
@@ -188,97 +187,191 @@ class Home extends Component {
         const asColor = this.state.availableSeats < this.state.qty ? "red" : "black"
         const bookingDisable = this.state.availableSeats < this.state.qty
         return (
-            <Form style={{ padding: 20 }} onSubmit={(e) => this.handleSubmit(e)}>
-                <Row style={{ alignItems: 'center', justifyContent: 'center' }}>
-                    <Form.Row style={{ width: '75%', borderBottom: '1px solid rgb(200,200,200)', marginBottom: 20 }}>
-                        <h4>Book Train Tickets</h4>
-                    </Form.Row>
-                    <Form.Row style={{ width: '75%' }}>
-                        <Form.Group as={Col} controlId="from">
-                            <Form.Label>From</Form.Label>
-                            <Select options={this.state.fromOptions} onChange={this.handleChange("from")} />
-                        </Form.Group>
-                        <Form.Group as={Col} controlId="to">
-                            <Form.Label>To</Form.Label>
-                            <Select options={this.state.toOptions} onChange={this.handleChange("to")}
-                                value={this.state.to} />
-                        </Form.Group>
-                    </Form.Row>
-                    <Form.Row style={{ width: '75%' }}>
-                        <Form.Group as={Col} controlId="from">
-                            <Form.Label>Train</Form.Label>
-                            <Select options={this.state.trains} onChange={this.handleChange("train")}
-                                value={this.state.train} />
-                        </Form.Group>
-                        <Form.Group as={Col} controlId="to">
-                            <Form.Label>Class</Form.Label>
-                            <Select options={this.state.classes} onChange={this.handleChange("trainClass")}
-                                value={this.state.trainClass} />
-                        </Form.Group>
-                    </Form.Row>
-                    <Form.Row style={{ width: '75%' }}>
-                        <Col md={6} lg={6} xl={6}>
-                            <Form.Label>Date</Form.Label>
-                            <DatePicker
-                                className="form-control"
-                                onChange={this.handleDateChange}
-                                minDate={new Date()}
-                                value={this.state.date}
-                                placeholderText="YYYY-MM-DD"
-                            />
-                        </Col>
-                        <Form.Group as={Col} controlId="time">
-                            <Form.Label>Time</Form.Label>
-                            <Select options={this.state.schedules} onChange={this.handleChange("time")}
-                                value={this.state.time} />
-                        </Form.Group>
-                    </Form.Row>
-                    <Form.Row style={{ width: '75%', paddingBottom: 20 }}>
-                        <Col md={6} lg={6} xl={6}>
-                            <Form.Label>No of Tickets</Form.Label>
-                            <Form.Control placeholder="qty" value={this.state.qty} onChange={this.handleQtyChange()} />
-                        </Col>
-                    </Form.Row>
-                    <Form.Row style={{ width: '75%', paddingLeft: 5, align: 'right' }}>
-                        {this.state.amount &&
-                            <Table striped size="sm">
-                                <tbody>
-                                    <tr>
-                                        <td align='right' style={{ border: "1px solid #dee2e6" }}>Available Seats</td>
-                                        <td align='right' style={{
-                                            border: "1px solid #dee2e6",
-                                            color: asColor
-                                        }}>{this.state.availableSeats}</td>
-                                    </tr>
-                                    <tr style={{ border: "none" }}>
-                                        <td style={{ border: "none" }} height="40" />
-                                    </tr>
-                                    <tr>
-                                        <td align='right' style={{ border: "1px solid #dee2e6" }}>Amount</td>
-                                        <td align='right' style={{ border: "1px solid #dee2e6" }}>{this.state.amount} LKR</td>
-                                    </tr>
-                                    <tr>
-                                        <td align='right' style={{ border: "1px solid #dee2e6" }}>Discount</td>
-                                        <td align='right' style={{ border: "1px solid #dee2e6" }}>{this.state.discount} LKR</td>
-                                    </tr>
-                                    <tr>
-                                        <td align='right' style={{ border: "1px solid #dee2e6" }}>Total</td>
-                                        <td align='right' style={{ border: "1px solid #dee2e6" }}>{this.state.total} LKR</td>
-                                    </tr>
-                                </tbody>
-                            </Table>
-                        }
-                    </Form.Row>
-                    <Form.Row style={{ width: '75%' }}>
-                        {this.state.showErr && <p style={{ color: 'red' }}>{this.state.errMsg}</p>}
-                    </Form.Row>
-                    <Form.Row style={{ width: '75%', padding: 5 }}>
-                        <Button variant="primary" type="submit" disabled={bookingDisable}>
-                            Make Reservation
-                        </Button>
-                    </Form.Row>
-                </Row>
-            </Form>
+               <Tabs defaultActiveKey="bus" id="home">
+                   <Tab eventKey="bus" title="Bus Ticket">
+                       {/*<Form style={{ padding: 20 }} onSubmit={(e) => this.handleSubmit(e)}>*/}
+                       {/*<Row style={{ alignItems: 'center', justifyContent: 'center' }}>*/}
+                       {/*    <Form.Row style={{ width: '75%' }}>*/}
+                       {/*        <Form.Group as={Col} controlId="from">*/}
+                       {/*            <Form.Label>From</Form.Label>*/}
+                       {/*            <Select options={this.state.fromOptions} onChange={this.handleChange("from")} />*/}
+                       {/*        </Form.Group>*/}
+                       {/*        <Form.Group as={Col} controlId="to">*/}
+                       {/*            <Form.Label>To</Form.Label>*/}
+                       {/*            <Select options={this.state.toOptions} onChange={this.handleChange("to")}*/}
+                       {/*                    value={this.state.to} />*/}
+                       {/*        </Form.Group>*/}
+                       {/*    </Form.Row>*/}
+                       {/*    <Form.Row style={{ width: '75%' }}>*/}
+                       {/*        <Form.Group as={Col} controlId="from">*/}
+                       {/*            <Form.Label>Bus</Form.Label>*/}
+                       {/*            <Select options={this.state.train} onChange={this.handleChange("train")}*/}
+                       {/*                    value={this.state.train} />*/}
+                       {/*        </Form.Group>*/}
+                       {/*    </Form.Row>*/}
+                       {/*    <Form.Row style={{ width: '75%' }}>*/}
+                       {/*        <Col md={6} lg={6} xl={6}>*/}
+                       {/*            <Form.Label>Date</Form.Label>*/}
+                       {/*            <DatePicker*/}
+                       {/*                className="form-control"*/}
+                       {/*                onChange={this.handleDateChange}*/}
+                       {/*                minDate={new Date()}*/}
+                       {/*                value={this.state.date}*/}
+                       {/*                placeholderText="YYYY-MM-DD"*/}
+                       {/*            />*/}
+                       {/*        </Col>*/}
+                       {/*        <Form.Group as={Col} controlId="time">*/}
+                       {/*            <Form.Label>Time</Form.Label>*/}
+                       {/*            <Select options={this.state.schedules} onChange={this.handleChange("time")}*/}
+                       {/*                    value={this.state.time} />*/}
+                       {/*        </Form.Group>*/}
+                       {/*    </Form.Row>*/}
+                       {/*    <Form.Row style={{ width: '75%', paddingBottom: 20 }}>*/}
+                       {/*        <Col md={6} lg={6} xl={6}>*/}
+                       {/*            <Form.Label>No of Tickets</Form.Label>*/}
+                       {/*            <Form.Control placeholder="qty" value={this.state.qty} onChange={this.handleQtyChange()} />*/}
+                       {/*        </Col>*/}
+                       {/*    </Form.Row>*/}
+
+                       {/*    <Form.Row style={{ width: '75%', paddingLeft: 5, align: 'right' }}>*/}
+                       {/*        {this.state.amount &&*/}
+                       {/*        <Table striped size="sm">*/}
+                       {/*            <tbody>*/}
+                       {/*            <tr>*/}
+                       {/*                <td align='right' style={{ border: "1px solid #dee2e6" }}>Available Seats</td>*/}
+                       {/*                <td align='right' style={{*/}
+                       {/*                    border: "1px solid #dee2e6",*/}
+                       {/*                    color: asColor*/}
+                       {/*                }}>{this.state.availableSeats}</td>*/}
+                       {/*            </tr>*/}
+                       {/*            <tr style={{ border: "none" }}>*/}
+                       {/*                <td style={{ border: "none" }} height="40" />*/}
+                       {/*            </tr>*/}
+                       {/*            <tr>*/}
+                       {/*                <td align='right' style={{ border: "1px solid #dee2e6" }}>Amount</td>*/}
+                       {/*                <td align='right' style={{ border: "1px solid #dee2e6" }}>{this.state.amount} LKR</td>*/}
+                       {/*            </tr>*/}
+                       {/*            <tr>*/}
+                       {/*                <td align='right' style={{ border: "1px solid #dee2e6" }}>Discount</td>*/}
+                       {/*                <td align='right' style={{ border: "1px solid #dee2e6" }}>{this.state.discount} LKR</td>*/}
+                       {/*            </tr>*/}
+                       {/*            <tr>*/}
+                       {/*                <td align='right' style={{ border: "1px solid #dee2e6" }}>Total</td>*/}
+                       {/*                <td align='right' style={{ border: "1px solid #dee2e6" }}>{this.state.total} LKR</td>*/}
+                       {/*            </tr>*/}
+                       {/*            </tbody>*/}
+                       {/*        </Table>*/}
+                       {/*        }*/}
+                       {/*    </Form.Row>*/}
+                       {/*    <Form.Row style={{ width: '75%' }}>*/}
+                       {/*        {this.state.showErr && <p style={{ color: 'red' }}>{this.state.errMsg}</p>}*/}
+                       {/*    </Form.Row>*/}
+                       {/*    <Form.Row style={{ width: '75%', padding: 5 }}>*/}
+                       {/*        <Button variant="primary" type="submit" disabled={bookingDisable}>*/}
+                       {/*            Make Reservation*/}
+                       {/*        </Button>*/}
+                       {/*    </Form.Row>*/}
+                       {/*</Row>*/}
+                   {/*</Form>*/}
+               </Tab>
+                   <Tab eventKey="train" title="Train Ticket">
+                       <Form style={{ padding: 20 }} onSubmit={(e) => this.handleSubmit(e)}>
+                           <Row style={{ alignItems: 'center', justifyContent: 'center' }}>
+                               <Form.Row style={{ width: '75%' }}>
+                                   <Form.Group as={Col} controlId="from">
+                                       <Form.Label>From</Form.Label>
+                                       <Select options={this.state.fromOptions} onChange={this.handleChange("from")} />
+                                   </Form.Group>
+                                   <Form.Group as={Col} controlId="to">
+                                       <Form.Label>To</Form.Label>
+                                       <Select options={this.state.toOptions} onChange={this.handleChange("to")}
+                                               value={this.state.to} />
+                                   </Form.Group>
+                               </Form.Row>
+                               <Form.Row style={{ width: '75%' }}>
+                                   <Form.Group as={Col} controlId="from">
+                                       <Form.Label>Train</Form.Label>
+                                       <Select options={this.state.trains} onChange={this.handleChange("train")}
+                                               value={this.state.train} />
+                                   </Form.Group>
+                                   <Form.Group as={Col} controlId="to">
+                                       <Form.Label>Class</Form.Label>
+                                       <Input type="select" name="classes" id="routeClass"
+                                              value={this.state.classes} onChange={this.handleChange("trainClass")}>
+                                           <option>Select a Class</option>
+                                           <option>First Class</option>
+                                           <option>Second Class</option>
+                                           <option>Third Class</option>
+                                       </Input>
+                                   </Form.Group>
+                               </Form.Row>
+                               <Form.Row style={{ width: '75%' }}>
+                                   <Col md={6} lg={6} xl={6}>
+                                       <Form.Label>Date</Form.Label>
+                                       <DatePicker
+                                           className="form-control"
+                                           onChange={this.handleDateChange}
+                                           minDate={new Date()}
+                                           value={this.state.date}
+                                           placeholderText="YYYY-MM-DD"
+                                       />
+                                   </Col>
+                                   <Form.Group as={Col} controlId="time">
+                                       <Form.Label>Time</Form.Label>
+                                       <TimePicker onChange={this.handleTimeChange} value={this.state.time} />
+                                   </Form.Group>
+                               </Form.Row>
+                               <Form.Row style={{ width: '75%', paddingBottom: 20 }}>
+                                   <Col md={6} lg={6} xl={6}>
+                                       <Form.Label>No of Tickets</Form.Label>
+                                       <Form.Control placeholder="qty" value={this.state.qty} onChange={this.handleQtyChange()} />
+                                   </Col>
+                               </Form.Row>
+                               <Form.Row style={{ width: '75%', paddingLeft: 5, align: 'right' }}>
+                                   {this.state.amount &&
+                                   <Table striped size="sm">
+                                       <tbody>
+                                       <tr>
+                                           <td align='right' style={{ border: "1px solid #dee2e6" }}>Available Seats</td>
+                                           <td align='right' style={{
+                                               border: "1px solid #dee2e6",
+                                               color: asColor
+                                           }}>2</td>
+                                       </tr>
+                                       <tr style={{ border: "none" }}>
+                                           <td style={{ border: "none" }} height="40" />
+                                       </tr>
+                                       <tr>
+                                           <td align='right' style={{ border: "1px solid #dee2e6" }}>Amount</td>
+                                           <td align='right' style={{ border: "1px solid #dee2e6" }}>500 LKR</td>
+                                       </tr>
+                                       <tr>
+                                           <td align='right' style={{ border: "1px solid #dee2e6" }}>Discount</td>
+                                           <td align='right' style={{ border: "1px solid #dee2e6" }}>0 LKR</td>
+                                       </tr>
+                                       <tr>
+                                           <td align='right' style={{ border: "1px solid #dee2e6" }}>Total</td>
+                                           <td align='right' style={{ border: "1px solid #dee2e6" }}>500 LKR</td>
+                                       </tr>
+                                       </tbody>
+                                   </Table>
+                                   }
+                               </Form.Row>
+                               <Form.Row style={{ width: '75%' }}>
+                                   {this.state.showErr && <p style={{ color: 'red' }}>{this.state.errMsg}</p>}
+                               </Form.Row>
+                               <Form.Row style={{ width: '75%', padding: 5 }}>
+                                   <Button variant="primary" type="submit" disabled={bookingDisable}>
+                                       Make Reservation
+                                   </Button>
+                               </Form.Row>
+                           </Row>
+                       </Form>
+                   </Tab>
+
+            </Tabs>
+
+
         );
     }
 }

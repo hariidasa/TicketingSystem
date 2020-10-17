@@ -1,6 +1,8 @@
 'use strict'
 // import mongoose
 const mongoose = require('mongoose');
+const bodyParser=require('body-parser');
+const passport=require('passport');
 // load env variables
 const dotenv = require('dotenv');
 dotenv.config()
@@ -11,6 +13,10 @@ const register = require('./routers/register')
 const user = require('./routers/user')
 const admin = require('./routers/admin')
 const railway = require('./routers/transroute')
+
+//Body parser middleware
+app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.json());
 
 //db connection
 mongoose.connect(
@@ -33,6 +39,12 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
     next();
 });
+
+//passport middleware
+app.use(passport.initialize());
+
+//passport Config
+require('./Cofig/passport')(passport);
 
 app.use(railway)
 app.use(login)
