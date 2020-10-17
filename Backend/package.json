@@ -21,10 +21,14 @@
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "react-toastify": "^6.0.9",
-    "twilio": "^3.49.4"
+    "twilio": "^3.49.4",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^8.2.0"
   },
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "test": "mocha --timeout 10000"
   },
   "keywords": [],
   "author": "",
