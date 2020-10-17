@@ -12,6 +12,7 @@ class Reservations extends Component {
 
     constructor(props) {
         super(props);
+
         this.state = {
             reservations: [],
             items: [],
@@ -19,6 +20,8 @@ class Reservations extends Component {
             lastPage: 1,
             paginateItems: []
         };
+
+        console.log(this.state)
     }
 
     componentDidMount() {
@@ -98,6 +101,7 @@ class Reservations extends Component {
         let items = [];
         const offset = (this.state.offset - 1) * 5
 
+        console.log(this.state)
         for (let number = offset; number < offset + 5; number++) {
             const reservation = this.state.reservations[number]
             if (reservation) {
@@ -141,9 +145,9 @@ class Reservations extends Component {
                                 </Row>
                                 <Row>
                                     <br/>
-                                    <Col>Amount : {reservation.amount.toFixed(2)}</Col>
-                                    <Col>Discount : {reservation.discount.toFixed(2)}</Col>
-                                    <Col align='right'><b>Total :</b> {reservation.total.toFixed(2)}</Col>
+                                    <Col>Amount : 500</Col>
+                                    <Col>Discount : 0</Col>
+                                    <Col align='right'><b>Total :</b> 500</Col>
                                 </Row>
                                 <Row>
                                     <Col style={{paddingTop: 10}} align='right'>
