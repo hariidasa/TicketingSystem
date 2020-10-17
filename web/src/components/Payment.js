@@ -97,9 +97,9 @@ class Payment extends Component {
                 time: state.time,
                 qty: state.qty,
                 date: state.date,
-                amount: 500,
+                amount: state.amount,
                 discount: 0,
-                total: 500,
+                total: state.total,
                 paymentMethod: state.checked
             }
             makeReservation(reservation)
@@ -124,15 +124,15 @@ class Payment extends Component {
                             <tbody>
                                 <tr>
                                     <td align='right'>Amount</td>
-                                    <td align='right'>500</td>
+                                    <td align='right'>{this.state.amount} LKR</td>
                                 </tr>
                                 <tr>
                                     <td align='right'>Discount</td>
-                                    <td align='right'>0</td>
+                                    <td align='right'>{this.state.discount} LKR</td>
                                 </tr>
                                 <tr>
                                     <td align='right'>Total</td>
-                                    <td align='right'>500</td>
+                                    <td align='right'>{this.state.total} LKR</td>
                                 </tr>
                             </tbody>
                         </Table>

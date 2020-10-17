@@ -23,6 +23,9 @@ export function buses() {
 }
 
 export function trainsByRoute(route) {
+    return callGet(baseUrl + '/transroute/trains/' + route);
+}
+export function busesByRoute(route) {
     return callGet(baseUrl + '/transroute/buses/' + route);
 }
 

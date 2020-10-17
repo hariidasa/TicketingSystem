@@ -10,16 +10,18 @@ class NavBar extends Component {
             user = JSON.parse(user)
         }
         return (
-            <Navbar bg="dark" variant="dark" expand="sm">
+            <Navbar  style={{backgroundColor: '#F58D3C'}}  expand="sm">
                 <Navbar.Brand href="/">
-                    E - Transport Admin Panel
+                  <h2>
+                      E - Transport Admin Panel
+                  </h2>
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ml-auto">
                         {user ?
                             <>
-                                <Nav.Link href="/">{'Home'}</Nav.Link>
+                                <Nav.Link href="/"><h4>{'Home'}</h4></Nav.Link>
                                 <Nav.Link href="/reports">{'Reports'}</Nav.Link>
                                 <Nav.Link href="/routeManage">{'Routes'}</Nav.Link>
                                 <Nav.Link href="/trainManage">{'Trains'}</Nav.Link>

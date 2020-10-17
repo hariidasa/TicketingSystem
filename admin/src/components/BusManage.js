@@ -132,8 +132,8 @@ class BusManage extends React.Component {
                         </h6>
                         <Form onSubmit={this.handleSubmitOne}>
                             <FormGroup>
-                                <Label for="busName">Bus Name</Label>
-                                <Input type="text" name="name" id="busName" placeholder="New Bus Name"
+                                <Label for="busName">Registered Number</Label>
+                                <Input type="text" name="name" id="busName" placeholder="CPNC2540"
                                        value={this.state.name} onChange={this.handleChange}>
                                 </Input>
                             </FormGroup>
@@ -185,7 +185,7 @@ class BusManage extends React.Component {
                         </h6>
                         <Form onSubmit={this.handleSubmitThree}>
                             <FormGroup>
-                                <Label for="routeDeleteSelect">Bus Name</Label>
+                                <Label for="routeDeleteSelect">Registered Number</Label>
                                 <Input type="select" name="delName" id="routeDeleteSelect"
                                        value={this.state.delName} onChange={this.handleChange}>
                                     <option>Select a Bus</option>
