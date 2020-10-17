@@ -27,9 +27,19 @@ class Home extends Component {
             trains: [],
             errMsg: 'Required fields empty or invalid!!!',
             showErr: false,
-            time: 0
+            time: 0,
+            trainClasses:[
+                {values:'First Class',label:'First Class'},
+                {values:'Second Class',label:'Second Class'},
+                {values:'Third Class',label:'Third Class'}
+            ]
+
+
+
 
         };
+
+
     }
 
     handleTimeChange(time) {
@@ -177,12 +187,15 @@ class Home extends Component {
             alert("Please Sign In Before Make a Reservation!!!")
             this.props.history.push('/')
         } else if (state.from && state.to && state.train && state.trainClass && state.time && state.qty && state.qty !== 0 && state.date) {
-            this.props.history.push("/payment", { ...this.state })
+            event.preventDefault()
+            this.props.history.push("/payment",console.log({ ...this.state }) )
+
+
         } else {
             this.setState({ showErr: true })
         }
         event.preventDefault()
-        event.stopPropagation()
+        //event.stopPropagation()
 
     }
 
@@ -239,6 +252,7 @@ class Home extends Component {
         this.updateAvailableSeats()
 
     }
+
     handleSubmitOne = event => {
         this.setState({ showErr: false })
         const state = this.state
@@ -376,13 +390,16 @@ class Home extends Component {
                                 </Form.Group>
                                 <Form.Group as={Col} controlId="to">
                                     <Form.Label>Class</Form.Label>
-                                    <Input type="select" name="classes" id="routeClass"
-                                           value={this.state.classes} onChange={this.handleChange("trainClass")}>
-                                        <option>Select a Class</option>
-                                        <option>First Class</option>
-                                        <option>Second Class</option>
-                                        <option>Third Class</option>
-                                    </Input>
+                                    <Select options={this.state.trainClasses} onChange={this.handleChange("trainClass")}
+                                            value={this.state.trainClass}/>
+                                    {/*<Input type="select" name="classes" id="routeClass"*/}
+                                    {/*       value={this.state.classes} onChange={this.handleChange("trainClass")}*/}
+                                    {/*>*/}
+
+                                    {/*    <option>First Class</option>*/}
+                                    {/*    <option>Second Class</option>*/}
+                                    {/*    <option>Third Class</option>*/}
+                                    {/*</Input>*/}
                                 </Form.Group>
                             </Form.Row>
                             <Form.Row style={{ width: '75%' }}>
@@ -441,7 +458,7 @@ class Home extends Component {
                                 {this.state.showErr && <p style={{ color: 'red' }}>{this.state.errMsg}</p>}
                             </Form.Row>
                             <Form.Row style={{ width: '75%', padding: 5 }}>
-                                <Button variant="primary" type="submit" disabled={bookingDisable}>
+                                <Button variant="primary" type="submit" disabled={bookingDisable} >
                                     Make Reservation
                                 </Button>
                             </Form.Row>

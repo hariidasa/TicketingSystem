@@ -12,15 +12,13 @@ describe('Tasks API', () =>{
     /**
      * Test the GET route
      */
-
     describe("GET /transroute/trains/",()=>{
-        it("It should get all the train routes",(done)=>{
+        it("It should return all the train routes",(done)=>{
             chai.request(server)
                 .get("/transroute/trains/")
                 .end((err,res)=>{
                     res.should.have.status(200);
                     res.should.have.header('content-type','application/json; charset=utf-8')
-
                     done();
                 })
         })
