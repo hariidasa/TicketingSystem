@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { routes, route, trainsByRoute, classes, schedules, getBookedSeatsCount } from '../Services'
+import { routes, route, trainsByRoute, classes, schedules, getBookedSeatsCount , buses} from '../Services'
 import {Button, Form, Col, Row, Table, Tabs, Tab} from 'react-bootstrap'
 import {Input} from 'reactstrap';
 import Select from 'react-select'
@@ -7,7 +7,7 @@ import DatePicker from "react-datepicker"
 import moment from 'moment'
 import TimePicker from 'react-bootstrap-time-picker';
 import config from '../config.json'
-
+import { withRouter } from "react-router-dom";
 class Home extends Component {
 
     constructor(props) {
@@ -48,7 +48,6 @@ class Home extends Component {
     }
 
     componentDidMount() {
-
         var options = []
         routes()
             .then(res => {
@@ -171,6 +170,7 @@ class Home extends Component {
             user = JSON.parse(user)
         }
         if (this.state.to && this.state.from && this.state.trainClass && this.state.qty) {
+            console.log(this.state.trainClass)
             var amount = Math.abs(this.state.to.fair - this.state.from.fair) * this.state.trainClass.fairRatio * this.state.qty
             amount = amount.toFixed(2)
             var discount = (user && user.discount ? 0.1 * amount : 0).toFixed(2)
@@ -188,7 +188,7 @@ class Home extends Component {
             this.props.history.push('/')
         } else if (state.from && state.to && state.train && state.trainClass && state.time && state.qty && state.qty !== 0 && state.date) {
             event.preventDefault()
-            this.props.history.push("/payment",console.log({ ...this.state }) )
+            this.props.history.push("/payment",{ ...this.state } )
 
 
         } else {
@@ -298,7 +298,7 @@ class Home extends Component {
                             </Form.Group>
                         </Form.Row>
                         <Form.Row style={{ width: '75%' }}>
-                            <Form.Group as={Col} controlId="from">
+                            <Form.Group as={Col} controlId="buses">
                                 <Form.Label>Bus</Form.Label>
                                 <Select options={this.state.buses} onChange={this.handleChangeOne("train")}
                                         value={this.state.train} />
@@ -440,15 +440,15 @@ class Home extends Component {
                                     </tr>
                                     <tr>
                                         <td align='right' style={{ border: "1px solid #dee2e6" }}>Amount</td>
-                                        <td align='right' style={{ border: "1px solid #dee2e6" }}>500 LKR</td>
+                                        <td align='right' style={{ border: "1px solid #dee2e6" }}>500</td>
                                     </tr>
                                     <tr>
                                         <td align='right' style={{ border: "1px solid #dee2e6" }}>Discount</td>
-                                        <td align='right' style={{ border: "1px solid #dee2e6" }}>0 LKR</td>
+                                        <td align='right' style={{ border: "1px solid #dee2e6" }}>0</td>
                                     </tr>
                                     <tr>
                                         <td align='right' style={{ border: "1px solid #dee2e6" }}>Total</td>
-                                        <td align='right' style={{ border: "1px solid #dee2e6" }}>500 LKR</td>
+                                        <td align='right' style={{ border: "1px solid #dee2e6" }}>500</td>
                                     </tr>
                                     </tbody>
                                 </Table>
@@ -473,4 +473,4 @@ class Home extends Component {
     }
 }
 
-export default Home;
+export default withRouter(Home);
