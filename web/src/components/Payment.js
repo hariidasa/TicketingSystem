@@ -78,7 +78,7 @@ class Payment extends Component {
 
     createReservation = (paymentMethod) => {
         const state = this.state
-        var user = localStorage.getItem('users')
+        var user = localStorage.getItem('user')
         if (user) {
             user = JSON.parse(user)
             const reservation = {
@@ -119,15 +119,15 @@ class Payment extends Component {
                             <tbody>
                                 <tr>
                                     <td align='right'>Amount</td>
-                                    <td align='right'>{this.state.amount} LKR</td>
+                                    <td align='right'>200 LKR</td>
                                 </tr>
                                 <tr>
                                     <td align='right'>Discount</td>
-                                    <td align='right'>{this.state.discount} LKR</td>
+                                    <td align='right'>10 LKR</td>
                                 </tr>
                                 <tr>
                                     <td align='right'>Total</td>
-                                    <td align='right'>{this.state.total} LKR</td>
+                                    <td align='right'>190 LKR</td>
                                 </tr>
                             </tbody>
                         </Table>
