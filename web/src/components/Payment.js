@@ -3,11 +3,14 @@ import React, { Component } from 'react'
 import { Table, Row, Form, Col, Button, Alert } from 'react-bootstrap'
 import { validateCard, validatePhone, makeReservation } from '../Services'
 import { toast } from 'react-toastify'
+import { withRouter } from "react-router-dom";
 
 class Payment extends Component {
 
     constructor(props) {
+
         super(props);
+
         this.state = {
             checked: 'cash',
             errMsg: 'Please fill all the fields!!!',
@@ -18,7 +21,8 @@ class Payment extends Component {
             cvc: '',
             exp: '',
             phoneNo: '',
-            pin: ''
+            pin: '',
+
         };
     }
 
@@ -78,6 +82,7 @@ class Payment extends Component {
 
     createReservation = (paymentMethod) => {
         const state = this.state
+        console.log(state.time)
         var user = localStorage.getItem('user')
         if (user) {
             user = JSON.parse(user)
@@ -85,16 +90,16 @@ class Payment extends Component {
                 ...paymentMethod,
                 user: user._id,
                 email: user.email,
-                //from: state.from.value,
+                from: state.from.value,
                 to: state.to.value,
                 train: state.train.value,
-                trainClass: state.trainClass.value,
-                time: state.time.value,
+                trainClass: state.trainClass.values,
+                time: state.time,
                 qty: state.qty,
                 date: state.date,
-                amount: state.amount,
-                discount: state.discount,
-                total: state.total,
+                amount: 500,
+                discount: 0,
+                total: 500,
                 paymentMethod: state.checked
             }
             makeReservation(reservation)
@@ -119,15 +124,15 @@ class Payment extends Component {
                             <tbody>
                                 <tr>
                                     <td align='right'>Amount</td>
-                                    <td align='right'>200 LKR</td>
+                                    <td align='right'>500</td>
                                 </tr>
                                 <tr>
                                     <td align='right'>Discount</td>
-                                    <td align='right'>10 LKR</td>
+                                    <td align='right'>0</td>
                                 </tr>
                                 <tr>
                                     <td align='right'>Total</td>
-                                    <td align='right'>190 LKR</td>
+                                    <td align='right'>500</td>
                                 </tr>
                             </tbody>
                         </Table>
@@ -190,4 +195,4 @@ class Payment extends Component {
     }
 }
 
-export default Payment
+export default withRouter(Payment)
