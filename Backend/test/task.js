@@ -7,18 +7,18 @@ let server = require("../index");
 chai.should();
 chai.use(chaiHtttp);
 
-describe('Tasks API', () =>{
+describe('Tasks API', () => {
 
     /**
      * Test the GET route
      */
-    describe("GET /transroute/trains/",()=>{
-        it("It should return all the train routes",(done)=>{
+    describe("GET /transroute/trains", () => {
+        it("It should return all the train routes", (done) => {
             chai.request(server)
-                .get("/transroute/trains/")
-                .end((err,res)=>{
+                .get("/transroute/trains")
+                .end((err, res) => {
                     res.should.have.status(200);
-                    res.should.have.header('content-type','application/json; charset=utf-8')
+                    //res.should.have.property('name');
                     done();
                 })
         })
@@ -37,8 +37,8 @@ describe('Tasks API', () =>{
      * Test the PUT route
      */
 
-    /*
-    Test the DELETE route
+    /**
+     * Test the DELETE route
      */
 
 })
