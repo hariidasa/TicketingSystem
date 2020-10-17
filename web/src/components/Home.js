@@ -189,6 +189,7 @@ class Home extends Component {
             var discount = (user && user.discount ? 0.1 * amount : 0).toFixed(2)
             var total = (amount - discount).toFixed(2)
             this.setState({ amount: 100, discount: 0, total: 100 })
+
         }
     }
 
@@ -209,7 +210,7 @@ class Home extends Component {
             this.setState({ showErr: true })
         }
         event.preventDefault()
-        //event.stopPropagation()
+        event.stopPropagation()
 
     }
 
@@ -283,12 +284,16 @@ class Home extends Component {
         event.stopPropagation()
 
     }
+
     handleQtyChangeOne = () => event => {
         if (event.target.value === "") {
             this.setState({ qty1: 0 }, () => this.calculateBusFair())
+            console.log(this.state)
         }
         if (Number.isInteger(parseInt(event.target.value))) {
             this.setState({ qty1: parseInt(event.target.value) }, () => this.calculateBusFair())
+            console.log(this.state)
+
         }
     }
     render() {
@@ -341,7 +346,7 @@ class Home extends Component {
                             <Form.Row style={{ width: '75%', paddingBottom: 20 }}>
                                 <Col md={6} lg={6} xl={6}>
                                     <Form.Label>No of Tickets</Form.Label>
-                                    <Form.Control placeholder="qty" value={this.state.qty} onChange={this.handleQtyChange()} />
+                                    <Form.Control placeholder="quantity" value={this.state.qty} onChange={this.handleQtyChange()} />
                                 </Col>
                             </Form.Row>
                             <Form.Row style={{ width: '75%', paddingLeft: 5, align: 'right' }}>
@@ -446,15 +451,15 @@ class Home extends Component {
                                     </tr>
                                     <tr>
                                         <td align='right' style={{ border: "1px solid #dee2e6" }}>Amount</td>
-                                        <td align='right' style={{ border: "1px solid #dee2e6" }}>{this.state.amount} LKR</td>
+                                        <td align='right' style={{ border: "1px solid #dee2e6" }}>{this.state.amount}</td>
                                     </tr>
                                     <tr>
                                         <td align='right' style={{ border: "1px solid #dee2e6" }}>Discount</td>
-                                        <td align='right' style={{ border: "1px solid #dee2e6" }}>{this.state.discount} LKR</td>
+                                        <td align='right' style={{ border: "1px solid #dee2e6" }}>{this.state.discount}</td>
                                     </tr>
                                     <tr>
                                         <td align='right' style={{ border: "1px solid #dee2e6" }}>Total</td>
-                                        <td align='right' style={{ border: "1px solid #dee2e6" }}>{this.state.total} LKR</td>
+                                        <td align='right' style={{ border: "1px solid #dee2e6" }}>{this.state.total}</td>
                                     </tr>
                                     </tbody>
                                 </Table>
