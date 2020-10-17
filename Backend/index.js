@@ -15,7 +15,9 @@ const railway = require('./routers/transroute')
 //db connection
 mongoose.connect(
     process.env.MONGO_URI,
-    {useNewUrlParser: true}
+    {useNewUrlParser: true,
+         useUnifiedTopology: true }
+
 )
     .then(() => console.log('DB Connected'))
 
@@ -38,10 +40,12 @@ app.use(register)
 app.use(user)
 app.use(admin)
 
-app.listen(8000, err => {
+const server = app.listen(8000, err => {
     if (err) {
         console.error(err)
         return
     }
     console.log('app listening on port 8000')
 });
+
+module.exports = server;
