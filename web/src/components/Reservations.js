@@ -145,9 +145,9 @@ class Reservations extends Component {
                                 </Row>
                                 <Row>
                                     <br/>
-                                    <Col>Amount : 500</Col>
-                                    <Col>Discount : 0</Col>
-                                    <Col align='right'><b>Total :</b> 500</Col>
+                                    <Col>Amount : {reservation.amount}</Col>
+                                    <Col>Discount : {reservation.discount}</Col>
+                                    <Col align='right'><b>Total :</b> {reservation.total}</Col>
                                 </Row>
                                 <Row>
                                     <Col style={{paddingTop: 10}} align='right'>
