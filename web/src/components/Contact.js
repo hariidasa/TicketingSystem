@@ -71,7 +71,7 @@ class Contact extends Component {
                                 <Form.Control required as="textarea" rows="3" onChange={this.handleChange('message')} value={this.state.message} />
                             </Form.Group>
                             <Col style={{ paddingRight: 0 }} align='right'>
-                                <Button variant="success" type="submit">
+                                <Button variant="danger" type="submit">
                                     Send Message
                                 </Button>
                             </Col>
@@ -83,15 +83,15 @@ class Contact extends Component {
                         <Col>
                             <div id="page">
                                 <p><strong><span style={{ textDecoration: 'underline' }}>General Information</span></strong></p>
-                                <p><strong>Telephones : </strong>+94 11 2 421281 <br /><strong>Fax Nos : </strong>+94 11 2 446490<br /><strong>Email : </strong>
-                                    <a href="mailto:gmr@railway.gov.lk">gmr@railway.gov.lk</a>
+                                <p><strong>Telephones : </strong>+94 11 2 852852 <br /><strong>Fax Nos : </strong>+94 11 2 963963<br /><strong>Email : </strong>
+                                    <a >srilankamotortraffic@ceylon.gov.lk</a>
                                     <span style={{ display: 'none' }}>This e-mail address is being protected from spambots. You need JavaScript enabled to view it
                                         </span>
                                 </p>
-                                <p><strong>Railway Head Office Exchange Number</strong> : +94 11 2 421281</p>
-                                <p><strong>Fort Railway Station Inquiries</strong> : +94 11 2 434215</p>
-                                <p><strong>Deputy Operating Superintendent</strong> : +94 11 2 687099</p>
-                                <p className="MsoNormal"><strong>Assistant Transportation Superintendent (Operation)</strong> : +94 11 2 692286</p>
+                                <p><strong>Head Office Exchange Number</strong> : +94 11 1 123123</p>
+                                <p><strong> Inquiries</strong> : +94 11 2 234234</p>
+                                <p><strong>Technical Office</strong> : +94 11 3 345345</p>
+                                <p className="MsoNormal"><strong>Manager (Technical Operation)</strong> : +94 11 2 222222</p>
                             </div>
                         </Col>
                     </Row>

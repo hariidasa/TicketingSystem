@@ -12,9 +12,9 @@ class NavBar extends Component {
         return (
             <Navbar  style={{backgroundColor: '#F58D3C'}}  expand="sm">
                 <Navbar.Brand href="/">
-                  <h2>
-                      E - Transport Admin Panel
-                  </h2>
+                    <h3 style={{color:'rgba(255, 255, 255)'}}>
+                     Public E - Ticketing - Administration
+                  </h3>
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                 <Navbar.Collapse id="basic-navbar-nav">
@@ -22,16 +22,14 @@ class NavBar extends Component {
                         {user ?
                             <>
                                 <Nav.Link href="/"><h4>{'Home'}</h4></Nav.Link>
-                                <Nav.Link href="/reports">{'Reports'}</Nav.Link>
-                                <Nav.Link href="/routeManage">{'Routes'}</Nav.Link>
-                                <Nav.Link href="/trainManage">{'Trains'}</Nav.Link>
-                                <Nav.Link href="/BusManage">{'Buses'}</Nav.Link>
-                                <Nav.Link href="/DriverManage">{'Drivers'}</Nav.Link>
-                                <Nav.Link href="/admins">{'Admins'}</Nav.Link>
-                                <Nav.Link href="/users">{'Users'}</Nav.Link>
+                                <Nav.Link href="/reports"><h5>{'Reports'}</h5></Nav.Link>
+                                <Nav.Link href="/routeManage"><h5>{'Routes'}</h5></Nav.Link>
+                                <Nav.Link href="/trainManage"><h5>{'Trains'}</h5></Nav.Link>
+                                <Nav.Link href="/BusManage"><h5>{'Buses'}</h5></Nav.Link>
+                                <Nav.Link href="/DriverManage"><h5>{'Drivers'}</h5></Nav.Link>
+                                <Nav.Link href="/admins"><h5>{'Admins'}</h5></Nav.Link>
+                                <Nav.Link href="/users"><h5>{'Users'}</h5></Nav.Link>
                                 <NavDropdown title={user.fname} id="nav-dropdown" alignRight>
-                                    <NavDropdown.Item href="/account">Account Settings</NavDropdown.Item>
-                                    <NavDropdown.Divider/>
                                     <NavDropdown.Item onClick={this.props.logout}>Sign out</NavDropdown.Item>
                                 </NavDropdown>
                                 {(user.imageUrl) ? <Image src={user.imageUrl} width={40}/> :

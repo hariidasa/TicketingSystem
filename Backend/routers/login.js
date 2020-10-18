@@ -2,6 +2,9 @@ const express = require('express')
 const router = express.Router()
 const UserModel = require('../models/user')
 
+//User Authentication
+
+//POST Method
 router.post('/login', (req, res) => {
     const body = req.body
     const username = body.username

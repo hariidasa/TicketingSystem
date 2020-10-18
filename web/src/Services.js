@@ -2,6 +2,8 @@ import config from './config.json'
 
 const baseUrl = config.baseUrl
 
+//routes from server
+
 export function login(body) {
     return callPost(baseUrl + '/login', body);
 }

@@ -40,12 +40,6 @@ app.use(function (req, res, next) {
     next();
 });
 
-//passport middleware
-app.use(passport.initialize());
-
-//passport Config
-require('./Cofig/passport')(passport);
-
 app.use(railway)
 app.use(login)
 app.use(register)

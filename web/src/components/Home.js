@@ -302,7 +302,7 @@ class Home extends Component {
         return (
             <Tabs defaultActiveKey="train" id="home">
                   <Tab eventKey="train" title="Train Ticket">
-                    <Form style={{ padding: 20 }} onSubmit={(e) => this.handleSubmit(e)}>
+                    <Form style={{ padding: 20 }} onSubmit={(e) => this.handleSubmit(e)} className="trainT">
                         <Row style={{ alignItems: 'center', justifyContent: 'center' }}>
                             <Form.Row style={{ width: '75%' }}>
                                 <Form.Group as={Col} controlId="from">
@@ -392,7 +392,7 @@ class Home extends Component {
                 </Tab>
 
                 <Tab eventKey="bus" title="Bus Ticket">
-                    <Form style={{ padding: 20 }} onSubmit={(e) => this.handleSubmitOne(e)}>
+                    <Form style={{ padding: 20 }} classNaame="busT">
                         <Row style={{ alignItems: 'center', justifyContent: 'center' }}>
                             <Form.Row style={{ width: '75%' }}>
                                 <Form.Group as={Col} controlId="from">
@@ -436,7 +436,7 @@ class Home extends Component {
                                 </Col>
                             </Form.Row>
                             <Form.Row style={{ width: '65%', paddingLeft: 5, align: 'right' }}>
-                                {this.state.qty1 &&
+                                {this.state.amount &&
                                 <Table striped size="sm">
                                     <tbody>
                                     <tr>
@@ -469,7 +469,7 @@ class Home extends Component {
                                 {this.state.showErr && <p style={{ color: 'red' }}>{this.state.errMsg}</p>}
                             </Form.Row>
                             <Form.Row style={{ width: '75%', padding: 5 }}>
-                                <Button variant="outline-success"  type="submit" disabled={bookingDisable} block>
+                                <Button variant="outline-success"  type="submit" href={'/'} block>
                                     Make Reservation
                                 </Button>
                             </Form.Row>

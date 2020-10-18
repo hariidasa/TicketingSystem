@@ -33,13 +33,13 @@ class Register extends Component {
         const form = event.currentTarget
 
         if (form.checkValidity() === true) {
-            var body = { ...this.state, password: getHash(this.state.password) }
+            var body = { ...this.state, password:getHash(this.state.password) }
             if (this.state.password !== this.state.cPassword) {
                 toast.error("Password doesn't match !")
             } else {
                 register(body)
                     .then(res => {
-                        toast.success("Account created, Please confirm your email !")
+                        toast.success("Account created, Welcome to best ticketing system!")
                         this.loginClick()
                     })
                     .catch(err => {
@@ -56,7 +56,6 @@ class Register extends Component {
                     })
             }
         }
-        // this.setState({ validated: true }) 
         event.preventDefault()
         event.stopPropagation()
     }
@@ -115,7 +114,7 @@ class Register extends Component {
                         </Button>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="light" block onClick={this.loginClick}>
+                        <Button variant="outline-success" block onClick={this.loginClick}>
                             Sign in
                         </Button>
                     </Modal.Footer>

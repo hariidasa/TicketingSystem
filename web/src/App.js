@@ -13,7 +13,6 @@ import Home from './components/Home'
 import Contact from './components/Contact'
 import Reservations from './components/Reservations'
 import Payment from './components/Payment'
-import AccountSettings from './components/AccountSettings'
 import Ticket from './components/Ticket'
 import TopUpCredit from "./components/TopUpCredit";
 
@@ -96,7 +95,6 @@ class App extends Component {
                   <Route path="/topUp" component={TopUpCredit} />
                   <Route path="/reservations" component={Reservations} />
                   <Route path="/payment" component={Payment} />
-                  <Route path="/account" component={AccountSettings} />
                   <Route path="/ticket/:rid" component={Ticket} />
                 </Switch>
               </Suspense>

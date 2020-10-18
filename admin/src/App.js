@@ -8,7 +8,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import './App.css'
-import AccountSettings from './components/AccountSettings'
 import NavBar from './components/commons/NavBar'
 import Home from './components/Home'
 import AdminManagement from './components/AdminManagement'
@@ -101,7 +100,6 @@ class App extends Component {
                   <Route exact path="/admins" component={AdminManagement} />
                   <Route exact path="/routs" component={Home} />
                   <Route exact path="/users" component={UserManagement} />
-                  <Route path="/account" component={AccountSettings} />
                   <Route path="/routeManage" render={(props) => {
                     return (<RouteManage {...props} />);
                   }}/>
