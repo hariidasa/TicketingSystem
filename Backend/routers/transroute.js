@@ -11,6 +11,9 @@ const configs = require('../config.json')
 const qrcode = require('qrcode');
 const driverModel = require('../models/driver')
 
+//Routes for train, driver, bus , class, routes
+//GET methods
+
 router.get('/transroute/trains', async (req, res) => {
     try {
         const result = await trainModel.find()
@@ -30,34 +33,6 @@ router.get('/transroute/trains/:route', async (req, res) => {
     }
 });
 
-
-router.post('/transroute/train', async (req, res) => {
-
-    const query = { name: req.body.name }
-    trainModel.find(query, (err, route) => {
-        if (err) {
-            console.log(err);
-            res.status(500).json(err);
-        } else {
-            if (route.length != 0) {
-                res.status(200).json({ driverExist: true });
-            } else {
-
-                let routes = new trainModel(req.body);
-                routes.save(err => {
-                    if (err) {
-                        console.log(err);
-                        res.status(500).json(err);
-                    } else {
-                        res.status(200).json({ driverExist: false });
-                    }
-                });
-
-            }
-
-        }
-    });
-});
 router.get('/transroute/classes', async (req, res) => {
     try {
         const result = await classModel.find()
@@ -65,54 +40,6 @@ router.get('/transroute/classes', async (req, res) => {
     } catch (err) {
         res.status(500).json(err)
     }
-});
-
-router.put('/transroute/train', async (req, res) => {
-
-    const body = {
-        name: req.body.station,
-    }
-    const query = { name: req.body.name }
-    await trainModel.find(query, async (err, route) => {
-
-        if (err) {
-            console.log(err);
-            res.status(500).json(err);
-        } else {
-            var found = null
-            found = await route[0].route.find(function (data) {
-                return data.name === req.body.station;
-            });
-
-            if (found) {
-                res.status(200).json({ stationExist: true });
-            } else {
-                trainModel.updateOne(query, { $push: { route: body } }, (err) => {
-                    if (err) {
-                        console.log(err)
-                        res.status(500).json(err);
-                    } else {
-                        res.status(200).json({ stationExist: false });
-                    }
-                })
-            }
-
-        }
-    })
-
-});
-
-router.delete('/transroute/train', async (req, res) => {
-
-    const query = { name: req.body.name }
-    trainModel.deleteOne(query, (err) => {
-        if (err) {
-            console.log(err);
-            res.status(500).json(err);
-        } else {
-            res.status(200).json({ status: true });
-        }
-    });
 });
 
 router.get('/transroute/buses', async (req, res) => {
@@ -124,82 +51,6 @@ router.get('/transroute/buses', async (req, res) => {
     }
 });
 
-router.post('/transroute/bus', async (req, res) => {
-
-    const query = { name: req.body.name }
-    busModel.find(query, (err, route) => {
-        if (err) {
-            console.log(err);
-            res.status(500).json(err);
-        } else {
-            if (route.length != 0) {
-                res.status(200).json({ driverExist: true });
-            } else {
-
-                let routes = new busModel(req.body);
-                routes.save(err => {
-                    if (err) {
-                        console.log(err);
-                        res.status(500).json(err);
-                    } else {
-                        res.status(200).json({ driverExist: false });
-                    }
-                });
-
-            }
-
-        }
-    });
-});
-
-router.put('/transroute/bus', async (req, res) => {
-
-    const body = {
-        name: req.body.station,
-    }
-    const query = { name: req.body.name }
-    await busModel.find(query, async (err, route) => {
-
-        if (err) {
-            console.log(err);
-            res.status(500).json(err);
-        } else {
-            var found = null
-            found = await route[0].route.find(function (data) {
-                return data.name === req.body.station;
-            });
-
-            if (found) {
-                res.status(200).json({ stationExist: true });
-            } else {
-                trainModel.updateOne(query, { $push: { route: body } }, (err) => {
-                    if (err) {
-                        console.log(err)
-                        res.status(500).json(err);
-                    } else {
-                        res.status(200).json({ stationExist: false });
-                    }
-                })
-            }
-
-        }
-    })
-
-});
-
-router.delete('/transroute/bus', async (req, res) => {
-
-    const query = { name: req.body.name }
-    busModel.deleteOne(query, (err) => {
-        if (err) {
-            console.log(err);
-            res.status(500).json(err);
-        } else {
-            res.status(200).json({ status: true });
-        }
-    });
-});
-
 router.get('/transroute/drivers', async (req, res) => {
     try {
         const result = await driverModel.find()
@@ -207,82 +58,6 @@ router.get('/transroute/drivers', async (req, res) => {
     } catch (err) {
         res.status(500).json(err)
     }
-});
-
-router.post('/transroute/driver', async (req, res) => {
-
-    const query = { name: req.body.name }
-    driverModel.find(query, (err, route) => {
-        if (err) {
-            console.log(err);
-            res.status(500).json(err);
-        } else {
-            if (route.length != 0) {
-                res.status(200).json({ driverExist: true });
-            } else {
-
-                let routes = new driverModel(req.body);
-                routes.save(err => {
-                    if (err) {
-                        console.log(err);
-                        res.status(500).json(err);
-                    } else {
-                        res.status(200).json({ driverExist: false });
-                    }
-                });
-
-            }
-
-        }
-    });
-});
-
-router.put('/transroute/driver', async (req, res) => {
-
-    const body = {
-        name: req.body.station,
-    }
-    const query = { name: req.body.name }
-    await driverModel.find(query, async (err, route) => {
-
-        if (err) {
-            console.log(err);
-            res.status(500).json(err);
-        } else {
-            var found = null
-            found = await route[0].route.find(function (data) {
-                return data.name === req.body.station;
-            });
-
-            if (found) {
-                res.status(200).json({ stationExist: true });
-            } else {
-                driverModel.updateOne(query, { $push: { route: body } }, (err) => {
-                    if (err) {
-                        console.log(err)
-                        res.status(500).json(err);
-                    } else {
-                        res.status(200).json({ stationExist: false });
-                    }
-                })
-            }
-
-        }
-    })
-
-});
-
-router.delete('/transroute/driver', async (req, res) => {
-
-    const query = { name: req.body.name }
-    driverModel.deleteOne(query, (err) => {
-        if (err) {
-            console.log(err);
-            res.status(500).json(err);
-        } else {
-            res.status(200).json({ status: true });
-        }
-    });
 });
 
 router.get('/transroute/routes', async (req, res) => {
@@ -340,38 +115,6 @@ router.get('/transroute/schedules', async (req, res) => {
     }
 });
 
-router.post('/transroute/reservations', async (req, res) => {
-    try {
-        const body = req.body
-        var reservation = new reservationModel(body)
-        var result = await reservation.save()
-
-        // send email
-        const img = await qrcode.toDataURL(configs.frontendUrl + "/ticket/" + result._id);
-        var base64Data = img.replace(/^data:image\/png;base64,/, "");
-        await require("fs").writeFile("images/" + result._id + ".png", base64Data, 'base64', function (err) {
-            console.log(err);
-        });
-
-        const html = '<html><body><h2><u>Reservation Slip</u></h2><p>Reference No : <b> ' + result._id + ' </b><br><br>From <b> ' + body.from + ' </b> to <b> ' + body.to + ' </b><br>' + 'Date :<b> ' + body.date + ' </b> Time :<b> ' + body.time + ' </b><br>Train : <b>' + body.train + ' </b> Class: <b> ' + body.trainClass + ' </b><br>Quantity : <b> ' + body.qty + ' </b></p><p>Total : <b> ' + body.total + ' LKR</b></p><br><img src="cid:123"/></body></html>'
-        client.sendReservationEmail({
-            ...body,
-            html: html,
-            subject: 'Railway e-Ticket',
-            path: 'images/' + result._id + '.png'
-        })
-
-        // send text message
-        if (body.phone) {
-            client.sendTextMessage({ ...body, reservationID: result._id })
-        }
-
-        res.status(200).json(result)
-    } catch (err) {
-        res.status(500).json(err)
-    }
-});
-
 router.get('/transroute/reservations', async (req, res) => {
     try {
         const result = await reservationModel.find()
@@ -418,9 +161,119 @@ router.get('/transroute/reservations/:id', async (req, res) => {
     }
 });
 
-router.delete('/transroute/reservations/:id', async (req, res) => {
+
+//POST Methods
+
+router.post('/transroute/train', async (req, res) => {
+
+    const query = { name: req.body.name }
+    trainModel.find(query, (err, route) => {
+        if (err) {
+            console.log(err);
+            res.status(500).json(err);
+        } else {
+            if (route.length != 0) {
+                res.status(200).json({ driverExist: true });
+            } else {
+
+                let routes = new trainModel(req.body);
+                routes.save(err => {
+                    if (err) {
+                        console.log(err);
+                        res.status(500).json(err);
+                    } else {
+                        res.status(200).json({ driverExist: false });
+                    }
+                });
+
+            }
+
+        }
+    });
+});
+
+router.post('/transroute/bus', async (req, res) => {
+
+    const query = { name: req.body.name }
+    busModel.find(query, (err, route) => {
+        if (err) {
+            console.log(err);
+            res.status(500).json(err);
+        } else {
+            if (route.length != 0) {
+                res.status(200).json({ driverExist: true });
+            } else {
+
+                let routes = new busModel(req.body);
+                routes.save(err => {
+                    if (err) {
+                        console.log(err);
+                        res.status(500).json(err);
+                    } else {
+                        res.status(200).json({ driverExist: false });
+                    }
+                });
+
+            }
+
+        }
+    });
+});
+
+router.post('/transroute/driver', async (req, res) => {
+
+    const query = { name: req.body.name }
+    driverModel.find(query, (err, route) => {
+        if (err) {
+            console.log(err);
+            res.status(500).json(err);
+        } else {
+            if (route.length != 0) {
+                res.status(200).json({ driverExist: true });
+            } else {
+
+                let routes = new driverModel(req.body);
+                routes.save(err => {
+                    if (err) {
+                        console.log(err);
+                        res.status(500).json(err);
+                    } else {
+                        res.status(200).json({ driverExist: false });
+                    }
+                });
+
+            }
+
+        }
+    });
+});
+
+router.post('/transroute/reservations', async (req, res) => {
     try {
-        const result = await reservationModel.deleteOne({ _id: req.params.id }).exec()
+        const body = req.body
+        var reservation = new reservationModel(body)
+        var result = await reservation.save()
+
+        // send email
+        const img = await qrcode.toDataURL(configs.frontendUrl + "/ticket/" + result._id);
+        var base64Data = img.replace(/^data:image\/png;base64,/, "");
+        await require("fs").writeFile("images/" + result._id + ".png", base64Data, 'base64', function (err) {
+            console.log(err);
+        });
+
+        const html = '<html><body><h2><u>Reservation Slip</u></h2><p>Reference No : <b> ' + result._id + ' </b><br><br>From <b> ' + body.from + ' </b> to <b> ' + body.to + ' </b><br>' + 'Date :<b> ' + body.date + ' </b> Time :<b> ' + body.time + ' </b><br>Train : <b>' + body.train + ' </b> Class: <b> ' + body.trainClass + ' </b><br>Quantity : <b> ' + body.qty + ' </b></p><p>Total : <b> ' + body.total + ' LKR</b></p><br><img src="cid:123"/></body></html>'
+        client.sendReservationEmail({
+            ...body,
+            html: html,
+            subject: 'Railway e-Ticket',
+            path: 'images/' + result._id + '.png'
+        })
+
+        // send text message
+        if (body.phone) {
+            client.sendTextMessage({ ...body, reservationID: result._id })
+        }
+
         res.status(200).json(result)
     } catch (err) {
         res.status(500).json(err)
@@ -453,6 +306,141 @@ router.post('/transroute/route', async (req, res) => {
 
         }
     });
+});
+
+router.post("/transroute/reservations/monthly", (req, res) => {
+
+    const yearMonth = req.body.year + "-" + req.body.month
+    const query = { "date": new RegExp(yearMonth, "i") }
+    reservationModel.find(query, (err, reservation) => {
+        if (err) {
+            console.log(err);
+            res.status(500).json(err);
+        } else {
+            res.status(200).json(reservation)
+        }
+    });
+});
+
+router.post("/transroute/reservations/yearly", (req, res) => {
+
+    const query = { "date": new RegExp(req.body.year, "i") }
+    reservationModel.find(query, (err, reservation) => {
+        if (err) {
+            console.log(err);
+            res.status(500).json(err);
+        } else {
+            res.status(200).json(reservation)
+        }
+    });
+});
+
+
+//PUT Methods
+
+router.put('/transroute/train', async (req, res) => {
+
+    const body = {
+        name: req.body.station,
+    }
+    const query = { name: req.body.name }
+    await trainModel.find(query, async (err, route) => {
+
+        if (err) {
+            console.log(err);
+            res.status(500).json(err);
+        } else {
+            var found = null
+            found = await route[0].route.find(function (data) {
+                return data.name === req.body.station;
+            });
+
+            if (found) {
+                res.status(200).json({ stationExist: true });
+            } else {
+                trainModel.updateOne(query, { $push: { route: body } }, (err) => {
+                    if (err) {
+                        console.log(err)
+                        res.status(500).json(err);
+                    } else {
+                        res.status(200).json({ stationExist: false });
+                    }
+                })
+            }
+
+        }
+    })
+
+});
+
+router.put('/transroute/bus', async (req, res) => {
+
+    const body = {
+        name: req.body.station,
+    }
+    const query = { name: req.body.name }
+    await busModel.find(query, async (err, route) => {
+
+        if (err) {
+            console.log(err);
+            res.status(500).json(err);
+        } else {
+            var found = null
+            found = await route[0].route.find(function (data) {
+                return data.name === req.body.station;
+            });
+
+            if (found) {
+                res.status(200).json({ stationExist: true });
+            } else {
+                trainModel.updateOne(query, { $push: { route: body } }, (err) => {
+                    if (err) {
+                        console.log(err)
+                        res.status(500).json(err);
+                    } else {
+                        res.status(200).json({ stationExist: false });
+                    }
+                })
+            }
+
+        }
+    })
+
+});
+
+router.put('/transroute/driver', async (req, res) => {
+
+    const body = {
+        name: req.body.station,
+    }
+    const query = { name: req.body.name }
+    await driverModel.find(query, async (err, route) => {
+
+        if (err) {
+            console.log(err);
+            res.status(500).json(err);
+        } else {
+            var found = null
+            found = await route[0].route.find(function (data) {
+                return data.name === req.body.station;
+            });
+
+            if (found) {
+                res.status(200).json({ stationExist: true });
+            } else {
+                driverModel.updateOne(query, { $push: { route: body } }, (err) => {
+                    if (err) {
+                        console.log(err)
+                        res.status(500).json(err);
+                    } else {
+                        res.status(200).json({ stationExist: false });
+                    }
+                })
+            }
+
+        }
+    })
+
 });
 
 router.put('/transroute/route', async (req, res) => {
@@ -491,6 +479,56 @@ router.put('/transroute/route', async (req, res) => {
 
 });
 
+//DELETE Methods
+
+router.delete('/transroute/train', async (req, res) => {
+
+    const query = { name: req.body.name }
+    trainModel.deleteOne(query, (err) => {
+        if (err) {
+            console.log(err);
+            res.status(500).json(err);
+        } else {
+            res.status(200).json({ status: true });
+        }
+    });
+});
+
+router.delete('/transroute/bus', async (req, res) => {
+
+    const query = { name: req.body.name }
+    busModel.deleteOne(query, (err) => {
+        if (err) {
+            console.log(err);
+            res.status(500).json(err);
+        } else {
+            res.status(200).json({ status: true });
+        }
+    });
+});
+
+router.delete('/transroute/driver', async (req, res) => {
+
+    const query = { name: req.body.name }
+    driverModel.deleteOne(query, (err) => {
+        if (err) {
+            console.log(err);
+            res.status(500).json(err);
+        } else {
+            res.status(200).json({ status: true });
+        }
+    });
+});
+
+router.delete('/transroute/reservations/:id', async (req, res) => {
+    try {
+        const result = await reservationModel.deleteOne({ _id: req.params.id }).exec()
+        res.status(200).json(result)
+    } catch (err) {
+        res.status(500).json(err)
+    }
+});
+
 router.delete('/transroute/route', async (req, res) => {
 
     const query = { name: req.body.name }
@@ -504,31 +542,5 @@ router.delete('/transroute/route', async (req, res) => {
     });
 });
 
-router.post("/transroute/reservations/monthly", (req, res) => {
-
-    const yearMonth = req.body.year + "-" + req.body.month
-    const query = { "date": new RegExp(yearMonth, "i") }
-    reservationModel.find(query, (err, reservation) => {
-        if (err) {
-            console.log(err);
-            res.status(500).json(err);
-        } else {
-            res.status(200).json(reservation)
-        }
-    });
-});
-
-router.post("/transroute/reservations/yearly", (req, res) => {
-
-    const query = { "date": new RegExp(req.body.year, "i") }
-    reservationModel.find(query, (err, reservation) => {
-        if (err) {
-            console.log(err);
-            res.status(500).json(err);
-        } else {
-            res.status(200).json(reservation)
-        }
-    });
-});
 
 module.exports = router

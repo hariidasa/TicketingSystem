@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
-
 import { Modal, Button, Form, Image, Row, Alert } from 'react-bootstrap'
-import { login, updateAccount, register } from '../Services'
+import { login, updateAccount} from '../Services'
 import { getHash } from './commons/Functions'
-import { toast } from 'react-toastify'
-import GoogleLogin from 'react-google-login';
 
 class Login extends Component {
 
@@ -37,7 +34,7 @@ class Login extends Component {
         const form = event.currentTarget
 
         if (form.checkValidity() === true) {
-            login({ username: this.state.username, password: this.state.password})
+            login({ username: this.state.username, password: getHash(this.state.password)})
                 .then(res => {
                     localStorage.setItem('user', JSON.stringify(res))
                     this.incrementLoginCount(res)
@@ -67,29 +64,13 @@ class Login extends Component {
             });
     };
 
-    // responseGoogle = async (response) => {
-    //     const profileObj = response.profileObj;
-    //     this.setState({ imageUrl: profileObj.imageUrl });
-    //     await register(profileObj).then(res => {
-    //         profileObj._id = res._id;
-    //         profileObj.fname = profileObj.givenName;
-    //     }).catch(e => {
-    //         this.errResponseGoogle(e);
-    //     });
-    //     localStorage.setItem('user', JSON.stringify(profileObj));
-    //     this.props.handleClose();
-    // };
-
-    // errResponseGoogle = (response) => {
-    //     toast.error("Unable to Sign in with Google !");
-    // }
 
     render() {
         const img = (this.state.imageUrl) ? <Image src={this.state.imageUrl} width='30%' /> :
             <Image src={require("../images/login.png")} width='30%' />;
         return (
             <Modal show={this.props.showLogin} onHide={this.props.handleClose}>
-                <Form onSubmit={e => this.handleSubmit(e)}>
+                <Form onSubmit={e => this.handleSubmit(e)} id="Loginf">
                     <Modal.Header closeButton>
                     </Modal.Header>
                     <Modal.Body>

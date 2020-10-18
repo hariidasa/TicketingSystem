@@ -4,6 +4,44 @@ const AdminModel = require('../models/admin')
 const client = require('../client')
 const configs = require('../config.json')
 
+//Admin Authentication and registration
+
+//GET Methods
+
+router.get('/admin/reg/:email', async (req, res) => {
+    try {
+        const encodedEmail = req.params.email;
+        const email = Buffer.from(encodedEmail, 'base64').toString('ascii');
+
+        //get user from db
+        var user = await AdminModel.findOne({ email }).exec();
+        user.set({ enabled: true })
+
+        //saving user in db
+        user.save()
+
+        //redirecting user to homepage
+        res.writeHead(302, {
+            'Location': configs.frontendAdminUrl
+        });
+        res.end();
+
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+router.get('/admin/admins', async (req, res) => {
+    try {
+        const result = await AdminModel.find()
+        res.status(200).json(result)
+    } catch (err) {
+        res.status(500).json(err)
+    }
+});
+
+//POST Methods
+
 router.post('/admin/login', (req, res) => {
     const body = req.body
     const username = body.username
@@ -21,18 +59,6 @@ router.post('/admin/login', (req, res) => {
                 }
             }
         });
-    } catch (err) {
-        res.status(500).json(err)
-    }
-});
-
-router.put('/admin/:id', async (req, res) => {
-    const body = req.body
-    try {
-        var admin = await AdminModel.findById(req.params.id).exec()
-        admin.set({ ...body})
-        var result = await admin.save()
-        res.status(200).json(result)
     } catch (err) {
         res.status(500).json(err)
     }
@@ -68,37 +94,21 @@ router.post('/admin/register', async (req, res) => {
     }
 });
 
-router.get('/admin/reg/:email', async (req, res) => {
+//PUT Methods
+
+router.put('/admin/:id', async (req, res) => {
+    const body = req.body
     try {
-        const encodedEmail = req.params.email;
-        const email = Buffer.from(encodedEmail, 'base64').toString('ascii');
-
-        //get user from db
-        var user = await AdminModel.findOne({ email }).exec();
-        user.set({ enabled: true })
-
-        //saving user in db
-        user.save()
-
-        //redirecting user to homepage
-        res.writeHead(302, {
-            'Location': configs.frontendAdminUrl
-        });
-        res.end();
-
-    } catch (err) {
-        res.status(500).json(err);
-    }
-});
-
-router.get('/admin/admins', async (req, res) => {
-    try {
-        const result = await AdminModel.find()
+        var admin = await AdminModel.findById(req.params.id).exec()
+        admin.set({ ...body})
+        var result = await admin.save()
         res.status(200).json(result)
     } catch (err) {
         res.status(500).json(err)
     }
 });
+
+//DELETE Methods
 
 router.delete('/admin/:id', async (req, res) => {
     try {

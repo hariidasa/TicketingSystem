@@ -13,17 +13,18 @@ class NavBar extends Component {
         return (
             <>
                 <Navbar style={{backgroundColor: '#F58D3C'}} expand="sm">
-                    <Navbar.Brand href="/">
-                        Public E-Ticketing System
+                    <Navbar.Brand href="/" >
+                      <h3 style={{color:'rgba(255, 255, 255)'}}>
+                          Public E-Ticketing System
+                      </h3>
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="ml-auto">
                             {user ?
                                 <>
-                                    <Nav.Link href="/reservations">My Reservations</Nav.Link>
                                     <NavDropdown title={user.fname} id="nav-dropdown" alignRight>
-                                        <NavDropdown.Item href="/account">Account Settings</NavDropdown.Item>
+                                        <NavDropdown.Item href="/reservations">My Reservations</NavDropdown.Item>
                                         <NavDropdown.Divider/>
                                         <NavDropdown.Item onClick={this.props.logout}>Sign out</NavDropdown.Item>
                                     </NavDropdown>
@@ -52,9 +53,9 @@ class NavBar extends Component {
                     <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                     <Navbar.Collapse id="basic-navbar-nav" data-collapsed="false">
                         <Nav className="mx-auto" >
+                            <Nav.Link style={{color: 'rgba(255, 255, 255,0.8)'}} href="/topUp"><h4>{'Reload Credits'}</h4></Nav.Link>
                             <Nav.Link style={{color: 'rgba(255, 255, 255,0.8)'}} href="/"><h3>{'Home'}</h3></Nav.Link>
-                            <Nav.Link style={{color: 'rgba(255, 255, 255,0.8)'}} href="/topUp"><h5>{'Reload Credits'}</h5></Nav.Link>
-                            <Nav.Link style={{color: 'rgba(255, 255, 255,0.8)'}} href="/contact"><h5>{'Contact Us'}</h5></Nav.Link>
+                            <Nav.Link style={{color: 'rgba(255, 255, 255,0.8)'}} href="/contact"><h4>{'Contact Us'}</h4></Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>

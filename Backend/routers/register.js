@@ -5,6 +5,34 @@ const client = require('../client')
 const configs = require('../config.json')
 
 const UserFactory = require('../service/UserFactory');
+//User Registration routes
+
+//GET Methods
+
+router.get('/users/reg/:email', async (req, res) => {
+    try {
+        const encodedEmail = req.params.email;
+        const email = Buffer.from(encodedEmail, 'base64').toString('ascii');
+
+        //get user from db
+        var user = await UserModel.findOne({email}).exec();
+        user.set({enabled: true})
+
+        //saving user in db
+        user.save()
+
+        //redirecting user to homepage
+        res.writeHead(302, {
+            'Location': configs.frontendUrl
+        });
+        res.end();
+
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+//POST Methods
 
 router.post('/register', async (req, res) => {
     const body = req.body
@@ -41,27 +69,6 @@ router.post('/register', async (req, res) => {
     }
 });
 
-router.get('/users/reg/:email', async (req, res) => {
-    try {
-        const encodedEmail = req.params.email;
-        const email = Buffer.from(encodedEmail, 'base64').toString('ascii');
 
-        //get user from db
-        var user = await UserModel.findOne({email}).exec();
-        user.set({enabled: true})
-
-        //saving user in db
-        user.save()
-
-        //redirecting user to homepage
-        res.writeHead(302, {
-            'Location': configs.frontendUrl
-        });
-        res.end();
-
-    } catch (err) {
-        res.status(500).json(err);
-    }
-});
 
 module.exports = router
