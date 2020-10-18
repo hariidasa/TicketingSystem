@@ -33,6 +33,31 @@ const reservationSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    amount: {
+        type: Number,
+        required: true,
+    },
+    discount: {
+        type: Number,
+        required: true,
+    },
+    total: {
+        type: Number,
+        required: true,
+    },
+    paymentMethod: {
+        type: String,
+        required: true,
+    },
+    card: {
+        type: String
+    },
+    phone: {
+        type: String
+    },
+    email: {
+        type: String
+    }
 
 })
 

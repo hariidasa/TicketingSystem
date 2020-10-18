@@ -130,7 +130,7 @@ class BusManage extends React.Component {
                         <h6 style={{width: '75%', textDecoration: 'underline', marginBottom: 20, fontWeight: "bold"}}>
                             Add New bus
                         </h6>
-                        <Form onSubmit={this.handleSubmitOne}>
+                        <form className="BusM" onSubmit={this.handleSubmitOne}>
                             <FormGroup>
                                 <Label for="busName">Registered Number</Label>
                                 <Input type="text" name="name" id="busName" placeholder="CPNC2540"
@@ -177,7 +177,7 @@ class BusManage extends React.Component {
                                     </FormGroup>
                                 </div>
                             )}
-                        </Form>
+                        </form>
                     </Col>
                     <Col sm style={{marginTop: "2%", paddingRight: "10%"}}>
                         <h6 style={{width: '75%', textDecoration: 'underline', marginBottom: 20, fontWeight: "bold"}}>

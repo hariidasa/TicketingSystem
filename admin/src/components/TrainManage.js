@@ -115,7 +115,7 @@ class TrainManage extends React.Component {
             return <option key={train._id} value={train.name}>{train.name}</option>
         })
         return (
-            <Container style={{width: "80%", marginTop: "1%", marginBottom: "1%"}}>
+            <Container   style={{width: "80%", marginTop: "1%", marginBottom: "1%"}}>
                 <Row
                     style={{
                         width: '100%',
@@ -130,10 +130,10 @@ class TrainManage extends React.Component {
                         <h6 style={{width: '75%', textDecoration: 'underline', marginBottom: 20, fontWeight: "bold"}}>
                             Add New Train
                         </h6>
-                        <Form onSubmit={this.handleSubmitOne}>
+                        <form className='trainM' onSubmit={this.handleSubmitOne}>
                             <FormGroup>
                                 <Label for="trainName">Train Name</Label>
-                                <Input type="text" name="name" id="trainName" placeholder="New Train Name"
+                                <Input type="text" name="Tname" id="trainName" placeholder="New Train Name"
                                        value={this.state.name} onChange={this.handleChange}>
                                 </Input>
                             </FormGroup>
@@ -177,7 +177,7 @@ class TrainManage extends React.Component {
                                     </FormGroup>
                                 </div>
                             )}
-                        </Form>
+                        </form>
                     </Col>
                     <Col sm style={{marginTop: "2%", paddingRight: "10%"}}>
                         <h6 style={{width: '75%', textDecoration: 'underline', marginBottom: 20, fontWeight: "bold"}}>

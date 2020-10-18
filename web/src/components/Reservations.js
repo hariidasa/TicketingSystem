@@ -5,6 +5,7 @@ import {getReservations, deleteReservation} from '../Services'
 import {toast} from 'react-toastify'
 import configs from '../config.json'
 import * as PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 
 var QRCode = require('qrcode.react')
 
@@ -21,7 +22,10 @@ class Reservations extends Component {
             paginateItems: []
         };
 
-        console.log(this.state)
+
+
+
+
     }
 
     componentDidMount() {
@@ -58,6 +62,7 @@ class Reservations extends Component {
                 .then(res => {
                     toast.success("Successfully removed reservation " + id)
                     this.updateReservations()
+                    this.props.history.push('/reservations')
                 })
                 .catch(err => {
                     console.log(err)
@@ -101,7 +106,7 @@ class Reservations extends Component {
         let items = [];
         const offset = (this.state.offset - 1) * 5
 
-        console.log(this.state)
+        console.log(this.state.reservations)
         for (let number = offset; number < offset + 5; number++) {
             const reservation = this.state.reservations[number]
             if (reservation) {
@@ -113,6 +118,7 @@ class Reservations extends Component {
 
                 const url = configs.frontendURL + "/ticket/" + reservation._id
 
+                console.log(this.state)
                 items.push(
                     <Row style={{width: '75%'}} key={number}>
                         <Col>
@@ -181,7 +187,7 @@ class Reservations extends Component {
 
 }
 
-export default Reservations;
+export default withRouter(Reservations);
 
 function ReservationList(props) {
     return <>

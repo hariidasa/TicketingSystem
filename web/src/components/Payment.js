@@ -82,7 +82,7 @@ class Payment extends Component {
 
     createReservation = (paymentMethod) => {
         const state = this.state
-        console.log(state.time)
+        console.log(state.amount)
         var user = localStorage.getItem('user')
         if (user) {
             user = JSON.parse(user)
@@ -102,10 +102,13 @@ class Payment extends Component {
                 total: state.total,
                 paymentMethod: state.checked
             }
+
+
             makeReservation(reservation)
                 .then(res => {
                     toast.success("Successfully paid " + reservation.total)
-                    this.props.history.push('/reservations')
+                    console.log(this.state)
+                    this.props.history.push('/reservations',{ ...this.state } )
                 })
                 .catch(err => {
                     console.log(err)

@@ -33,7 +33,7 @@ router.get('/users', async (req, res) => {
         res.json(userList);
         res.status(200).json(userList)
     } catch (err) {
-        res.status(500).json(err)
+        res.status(500)
     }
 })
 
